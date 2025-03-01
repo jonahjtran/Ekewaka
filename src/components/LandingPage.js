@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './LandingPage.css';
+import Navbar from './Navbar';
 
 function LandingPage() {
   const [financialGoal, setFinancialGoal] = useState('');
+  const navigate = useNavigate();
 
   const handleGoalChange = (e) => {
     setFinancialGoal(e.target.value);
@@ -12,7 +15,8 @@ function LandingPage() {
   const handleGoalSubmit = (e) => {
     e.preventDefault();
     console.log("Financial goal submitted:", financialGoal);
-    // Additional processing such as API calls can be added here
+    // Navigate to the chat analysis page
+    navigate('/chat-analysis', { state: { initialGoal: financialGoal } });
   };
 
   const adjustHeight = (element) => {
@@ -22,19 +26,7 @@ function LandingPage() {
 
   return (
     <div className="landing-page">
-      <header className="header">
-        <div className="container header-container">
-          <h1 className="logo">Ekewaka</h1>
-          <nav className="navigation">
-            <ul>
-              <li><a href="#features">Features</a></li>
-              <li><a href="#how-it-works">How It Works</a></li>
-              <li><a href="#contact">Contact</a></li>
-              <li><a href="/login">Login</a></li>
-            </ul>
-          </nav>
-        </div>
-      </header>
+      <Navbar />
       
       <section className="hero">
         <div className="container hero-container">
@@ -46,7 +38,7 @@ function LandingPage() {
           <form onSubmit={handleGoalSubmit} className="goal-form">
             <textarea 
               type="text" 
-              placeholder="Enter your financial goal" 
+              placeholder="Enter your financial goal and time frame" 
               value={financialGoal} 
               onChange={handleGoalChange} 
               className="goal-input"
@@ -56,7 +48,6 @@ function LandingPage() {
           </form>
         </div>
       </section>
-
     </div>
   );
 }

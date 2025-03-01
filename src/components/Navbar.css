@@ -1,0 +1,41 @@
+/* Header styles */
+.header {
+  background: #fff;
+  padding: 20px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 7vh;
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  position: relative; /* Add position relative for absolute positioning of logo */
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.navigation {
+  margin-left: auto; /* Push navigation to the right */
+}
+
+.navigation ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.navigation a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+} 
