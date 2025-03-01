@@ -76,6 +76,10 @@ function LandingPage() {
       payment_date: item.payment_date,
       payment_amount: item.payment_amount
     }));
+    console.log("HEREEEE");
+    console.log(extractedPurchases);
+    console.log(extractedDeposits);
+    console.log(extractedBills);
     localStorage.setItem('purchases', JSON.stringify(extractedPurchases));
     localStorage.setItem('deposits', JSON.stringify(extractedDeposits));
     localStorage.setItem('bills', JSON.stringify(extractedBills));
