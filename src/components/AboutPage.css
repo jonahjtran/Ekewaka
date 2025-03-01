@@ -64,36 +64,6 @@
   top: -2px;
 }
 
-.steps {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-  margin-top: 30px;
-}
-
-.step {
-  background: #f8f9fa;
-  border-radius: 8px;
-  padding: 25px;
-  transition: transform 0.3s ease;
-}
-
-.step:hover {
-  transform: translateY(-5px);
-}
-
-.step h3 {
-  color: #007bff;
-  font-size: 1.3rem;
-  margin-bottom: 15px;
-}
-
-.step p {
-  color: #666;
-  font-size: 1rem;
-  margin-bottom: 0;
-}
-
 /* Team Section Styles */
 .team-section {
   margin-top: 60px;
@@ -159,12 +129,30 @@
   font-weight: 500;
 }
 
-.member-bio {
-  color: #666;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin: 0;
-  max-width: 300px;
+.linkedin-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0077b5;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.linkedin-button:hover {
+  background-color: #005e93;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.linkedin-button svg {
+  width: 20px;
+  height: 20px;
 }
 
 /* Responsive adjustments */
@@ -183,10 +171,6 @@
 
   .about-section h2 {
     font-size: 1.5rem;
-  }
-
-  .steps {
-    grid-template-columns: 1fr;
   }
 
   .team-grid {

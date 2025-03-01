@@ -1,33 +1,47 @@
 import React from 'react';
 import './AboutPage.css';
 import jonahPhoto from '../images/IMG_5398.jpeg';
+import connorPhoto from '../images/IMG_5850.jpeg';
+import michaelPhoto from '../images/IMG_5398.jpeg';
+import alexPhoto from '../images/IMG_5885.jpeg';
+
+const LinkedInIcon = () => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width="24" 
+    height="24" 
+    viewBox="0 0 24 24"
+    fill="currentColor"
+  >
+    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+  </svg>
+);
 
 function AboutPage() {
   const teamMembers = [
     {
       name: "Jonah Tran",
       role: "Full Stack Developer",
-      school: "CS @ UIUC",
-      bio: "I'm a software engineer with a passion for building scalable and efficient systems. I'm currently a senior at UIUC studying Computer Science and Mathematics.",
-      photoPath: jonahPhoto
+      photoPath: jonahPhoto,
+      linkedIn: "https://www.linkedin.com/in/jonah-tran/"
     },
     {
-      name: "Connor Mckenna",
-      role: "Backend Developer",
-      school: "Backend specialist responsible for AI integration and data processing systems.",
-      photoPath: "/path-to-connor-photo.jpg"
-    },
-    {
-      name: "Kainoa Borges",
+      name: "Connor Koefelda",
       role: "Full Stack Developer",
-      school: "Full stack developer with expertise in financial data visualization and analysis.",
-      photoPath: "/path-to-kainoa-photo.jpg"
+      photoPath: connorPhoto,
+      linkedIn: "https://www.linkedin.com/in/connor-koefelda/"
     },
     {
-      name: "Aidan Amato",
+      name: "Michael Zayed",
       role: "Full Stack Developer",
-      school: "Full stack developer specializing in secure user authentication and data management.",
-      photoPath: "/path-to-aidan-photo.jpg"
+      photoPath: michaelPhoto,
+      linkedIn: "https://www.linkedin.com/in/michael-zayed/"
+    },
+    {
+      name: "Alexander Lauinger",
+      role: "Full Stack Developer",
+      photoPath: alexPhoto,
+      linkedIn: "https://www.linkedin.com/in/alexander-lauinger/"
     }
   ];
 
@@ -73,28 +87,6 @@ function AboutPage() {
             </ul>
           </section>
 
-          <section className="how-it-works">
-            <h2>How It Works</h2>
-            <div className="steps">
-              <div className="step">
-                <h3>1. Share Your Goal</h3>
-                <p>Start by telling us about your financial goal, whether it's saving for a home, planning for retirement, or building an emergency fund.</p>
-              </div>
-              <div className="step">
-                <h3>2. Provide Context</h3>
-                <p>Our AI assistant gathers relevant information about your current financial situation through natural conversation.</p>
-              </div>
-              <div className="step">
-                <h3>3. Get Personalized Plans</h3>
-                <p>Receive customized recommendations and visual budget comparisons to help you achieve your goals.</p>
-              </div>
-              <div className="step">
-                <h3>4. Track Progress</h3>
-                <p>Monitor your progress and receive ongoing guidance as you work toward your financial objectives.</p>
-              </div>
-            </div>
-          </section>
-
           <section className="team-section">
             <h2>Meet Our Team</h2>
             <p className="team-intro">
@@ -108,7 +100,15 @@ function AboutPage() {
                   </div>
                   <h3>{member.name}</h3>
                   <p className="member-role">{member.role}</p>
-                  <p className="member-school">{member.school}</p>
+                  <a 
+                    href={member.linkedIn}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="linkedin-button"
+                    title="Connect on LinkedIn"
+                  >
+                    <LinkedInIcon />
+                  </a>
                 </div>
               ))}
             </div>
