@@ -1,0 +1,19 @@
+.app {
+  display: flex;
+  min-height: 100vh;
+  transition: all 0.3s ease;
+  position: relative;
+  width: 100%;
+}
+
+.app.sidebar-open {
+  margin-left: 400px;
+  width: calc(100% - 400px);
+}
+
+@media (max-width: 768px) {
+  .app.sidebar-open {
+    margin-left: 0;
+    width: 100%;
+  }
+}

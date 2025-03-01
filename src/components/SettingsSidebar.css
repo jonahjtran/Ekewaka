@@ -1,18 +1,19 @@
 .settings-sidebar {
   position: fixed;
   top: 0;
-  right: -400px;
+  left: -400px;
   width: 400px;
   height: 100vh;
   background: white;
-  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-  transition: right 0.3s ease;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
   z-index: 1000;
   overflow-y: auto;
 }
 
 .settings-sidebar.open {
-  right: 0;
+  left: 0;
+  position: fixed;
 }
 
 .settings-header {
@@ -206,10 +207,15 @@ input:checked + .toggle-slider:before {
 }
 
 /* Responsive adjustments */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .settings-sidebar {
     width: 100%;
-    right: -100%;
+    left: -100%;
+  }
+
+  .settings-sidebar.open {
+    left: 0;
+    width: 100%;
   }
 
   .time-frame-input {

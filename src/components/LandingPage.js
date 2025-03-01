@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LandingPage.css';
-import Navbar from './Navbar';
 
 function LandingPage() {
   const [financialGoal, setFinancialGoal] = useState('');
@@ -26,8 +25,6 @@ function LandingPage() {
 
   return (
     <div className="landing-page">
-      <Navbar />
-      
       <section className="hero">
         <div className="container hero-container">
           <h2>Plan Your Financial Future with Confidence</h2>

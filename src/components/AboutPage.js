@@ -1,6 +1,5 @@
 import React from 'react';
 import './AboutPage.css';
-import Navbar from './Navbar';
 
 function AboutPage() {
   const teamMembers = [
@@ -32,8 +31,6 @@ function AboutPage() {
 
   return (
     <div className="about-page">
-      <Navbar />
-      
       <div className="about-content">
         <div className="about-section">
           <h1>About Ekewaka</h1>

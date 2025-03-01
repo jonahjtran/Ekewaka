@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import './ChatAnalysisPage.css';
-import Navbar from './Navbar';
 
 function ChatAnalysisPage() {
   const [messages, setMessages] = useState([]);
@@ -72,8 +71,6 @@ function ChatAnalysisPage() {
 
   return (
     <div className="chat-analysis-page">
-      <Navbar />
-      
       <div className="main-content">
         {/* Left side - Chat */}
         <div className="chat-section">
