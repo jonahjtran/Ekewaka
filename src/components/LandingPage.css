@@ -89,3 +89,145 @@
   box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
 }
 
+/* How it Works section */
+.how-it-works {
+  padding: 80px 0;
+  background-color: #7f888b;
+  transition: all 0.3s ease;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 50px;
+}
+
+.how-it-works h2 {
+  text-align: center;
+  font-size: 2.2rem;
+  color: #333;
+  margin: 0;
+}
+
+.toggle-button {
+  background: none;
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.5rem;
+  line-height: 1;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.toggle-button:hover {
+  background: #8e9ba8;
+  color: white;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  padding: 20px;
+  opacity: 1;
+  max-height: 1000px;
+  transition: all 0.3s ease;
+}
+
+/* Minimized state */
+.how-it-works.minimized .steps-grid {
+  opacity: 0;
+  max-height: 0;
+  padding: 0 20px;
+  margin: 0;
+  overflow: hidden;
+}
+
+.how-it-works.minimized {
+  padding: 20px 0;
+}
+
+.step-card {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.step-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.step-number {
+  background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0 auto 20px;
+}
+
+.step-card h3 {
+  color: #333;
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+}
+
+.step-card p {
+  color: #666;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .hero h2 {
+    font-size: 2rem;
+  }
+
+  .goal-form {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .goal-input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .steps-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h2 {
+    font-size: 1.8rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .how-it-works h2 {
+    font-size: 1.8rem;
+  }
+}
+

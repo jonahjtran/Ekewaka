@@ -4,6 +4,7 @@ import './LandingPage.css';
 
 function LandingPage() {
   const [financialGoal, setFinancialGoal] = useState('');
+  const [isHowItWorksExpanded, setIsHowItWorksExpanded] = useState(true);
   const navigate = useNavigate();
 
   const handleGoalChange = (e) => {
@@ -21,6 +22,10 @@ function LandingPage() {
   const adjustHeight = (element) => {
     element.style.height = 'auto'; // Reset height
     element.style.height = `${element.scrollHeight}px`; // Set height to scroll height
+  };
+
+  const toggleHowItWorks = () => {
+    setIsHowItWorksExpanded(prev => !prev);
   };
 
   return (
@@ -43,6 +48,43 @@ function LandingPage() {
             />
             <button type="submit" className="cta-button">Submit Goal</button>
           </form>
+        </div>
+      </section>
+
+      <section className={`how-it-works ${isHowItWorksExpanded ? 'expanded' : 'minimized'}`}>
+        <div className="container">
+          <div className="section-header">
+            <h2>How It Works</h2>
+            <button 
+              className="toggle-button" 
+              onClick={toggleHowItWorks}
+              aria-label={isHowItWorksExpanded ? "Minimize section" : "Expand section"}
+            >
+              {isHowItWorksExpanded ? '−' : '+'}
+            </button>
+          </div>
+          <div className="steps-grid">
+            <div className="step-card">
+              <div className="step-number">1</div>
+              <h3>Share Your Goal</h3>
+              <p>Tell us about your financial goals, whether it's saving for a home, planning for retirement, or building an emergency fund.</p>
+            </div>
+            <div className="step-card">
+              <div className="step-number">2</div>
+              <h3>AI Analysis</h3>
+              <p>Our AI assistant analyzes your goals and current financial situation through natural conversation.</p>
+            </div>
+            <div className="step-card">
+              <div className="step-number">3</div>
+              <h3>Get Your Plan</h3>
+              <p>Receive a personalized financial plan with actionable steps and visual budget comparisons.</p>
+            </div>
+            <div className="step-card">
+              <div className="step-number">4</div>
+              <h3>Track Progress</h3>
+              <p>Monitor your progress and get ongoing guidance as you work toward your financial objectives.</p>
+            </div>
+          </div>
         </div>
       </section>
     </div>

@@ -68,6 +68,12 @@
   display: flex;
   gap: 20px;
   align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.navigation li {
+  margin: 0;
 }
 
 .navigation a {
@@ -75,10 +81,13 @@
   color: #333;
   font-weight: 500;
   transition: color 0.3s ease;
+  padding: 8px 12px;
+  border-radius: 4px;
 }
 
 .navigation a:hover {
   color: #007bff;
+  background-color: #f8f9fa;
 }
 
 /* Style for login link */
@@ -93,4 +102,23 @@
 .navigation li:last-child a:hover {
   background: #0056b3;
   color: white;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .header-container {
+    padding: 0 20px;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+  }
+
+  .navigation ul {
+    gap: 15px;
+  }
+
+  .navigation a {
+    font-size: 0.9rem;
+  }
 } 
