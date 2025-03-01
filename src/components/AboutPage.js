@@ -1,30 +1,32 @@
 import React from 'react';
 import './AboutPage.css';
+import jonahPhoto from '../images/IMG_5398.jpeg';
 
 function AboutPage() {
   const teamMembers = [
     {
       name: "Jonah Tran",
       role: "Full Stack Developer",
-      bio: "Lead developer focusing on the frontend architecture and user experience design.",
-      photoPath: "/path-to-jonah-photo.jpg"
+      school: "CS @ UIUC",
+      bio: "I'm a software engineer with a passion for building scalable and efficient systems. I'm currently a senior at UIUC studying Computer Science and Mathematics.",
+      photoPath: jonahPhoto
     },
     {
       name: "Connor Mckenna",
       role: "Backend Developer",
-      bio: "Backend specialist responsible for AI integration and data processing systems.",
+      school: "Backend specialist responsible for AI integration and data processing systems.",
       photoPath: "/path-to-connor-photo.jpg"
     },
     {
       name: "Kainoa Borges",
       role: "Full Stack Developer",
-      bio: "Full stack developer with expertise in financial data visualization and analysis.",
+      school: "Full stack developer with expertise in financial data visualization and analysis.",
       photoPath: "/path-to-kainoa-photo.jpg"
     },
     {
       name: "Aidan Amato",
       role: "Full Stack Developer",
-      bio: "Full stack developer specializing in secure user authentication and data management.",
+      school: "Full stack developer specializing in secure user authentication and data management.",
       photoPath: "/path-to-aidan-photo.jpg"
     }
   ];
@@ -106,7 +108,7 @@ function AboutPage() {
                   </div>
                   <h3>{member.name}</h3>
                   <p className="member-role">{member.role}</p>
-                  <p className="member-bio">{member.bio}</p>
+                  <p className="member-school">{member.school}</p>
                 </div>
               ))}
             </div>

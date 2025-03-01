@@ -79,4 +79,18 @@
 
 .navigation a:hover {
   color: #007bff;
+}
+
+/* Style for login link */
+.navigation li:last-child a {
+  background: #007bff;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.navigation li:last-child a:hover {
+  background: #0056b3;
+  color: white;
 } 
