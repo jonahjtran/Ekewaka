@@ -23,7 +23,7 @@
 
         // Returns the key associated with the value
         function findKey(value, categories){
-            for(const key of categories.keys()){
+            for(const key of Object.keys(categories)){
                 if(categories[key].includes(value)){
                     return key;
                 }
@@ -37,15 +37,36 @@
         Returns:
 
         */
-        function handleData(arrPurchases, arrBills, arrDeposits){ // arr is an array of objects, categories is a dictionary
+        function handleData(/*arrPurchases, arrBills, arrDeposits*/){ // arr is an array of objects, categories is a dictionary
             const amt = "amount"; //Purchases and Deposits Use Amount
             const amt2 = "payment_amount"; // Bills use payment_amount
             const purch = "merchant_id"; // Purchases use merchant_id
             const bill = "payee"; // Bills use payee
+
+            const arrPurchases = JSON.parse(localStorage.getItem('purchases'));
+            const arrBills = JSON.parse(localStorage.getItem('deposits'));
+            const arrDeposits = JSON.parse(localStorage.getItem('bills'));
             const categories = JSON.parse(localStorage.getItem('categories'));
 
+            // const arrPurchases = {
+            //     0 : {merchant_id: "Taco Bell", purchase_date: '2025-03-01', amount: 4.5},
+            //     1 : {merchant_id: "Dons", purchase_date: '2025-03-01', amount: 7.8}
+            // }
+            
+            // const arrBills = {
+            //     0 : {payee: 'Rent', payment_date: '2024-01-01', payment_amount: 1200},
+            //     1 : {payee: 'Rent', payment_date: '2024-02-01', payment_amount: 1200}
+            // }
+            // const arrDeposits = {
+            //     0 : {transaction_date: '2024-01-04', amount: 4600}, 
+            //     1 : {transaction_date: '2024-01-18', amount: 4600}
+            // }
+            // const categories = {
+            //     "Food" : ["Taco Bell", "Dons"]
+            // }
+
             let overallMap = new Map();
-            for(let i = 0; i < arrBills.length; i++){
+            for(let i = 0; i < Object.keys(arrBills).length; i++){
                 let dict = arrBills[i];
                 let type = dict[bill];
                 if(type == "Credit Card"){
@@ -59,14 +80,25 @@
                 }
             }
             let depositTotal = 0.0;
-            for(let i = 0; i < arrDeposits.length; i++){
+            for(let i = 0; i < Object.keys(arrDeposits).length; i++){
                 let dict = arrDeposits[i];
                 depositTotal += dict[amt];
             }
 
-            for(let i = 0; i < arrPurchases.length; i++){
+            for(let i = 0; i < Object.keys(arrPurchases).length; i++){
                 let dict = arrPurchases[i];
                 let type = dict[purch];
+                if(type == undefined){
+                    let tempKey = "N/A Purchases";
+                    if(!overallMap.has(tempKey)){
+                        overallMap.set(tempKey, dict[amt]);
+                    }
+                    else{
+                        overallMap.set(tempKey, overallMap.get(tempKey) + dict[amt]);
+                    }
+                    continue;
+                }
+
                 let findKey2 = findKey(type, categories);
                 if(findKey2 == null){
                     continue;
@@ -75,60 +107,27 @@
                     overallMap.set(findKey2, dict[amt]);
                 }
                 else{
-                    overallMap.set(findKey2, overallMap.get(type) + dict[amt]);
+                    overallMap.set(findKey2, overallMap.get(findKey2) + dict[amt]);
                 }
             }
             overallMap.set("Deposits", depositTotal);
-
             return overallMap;
-
-            // let billMap = new Map();
-            // for(let i = 0; i < arrBills.length; i++){
-            //     let dict = arrBills[i];
-            //     let type = dict[bill];
-            //     if(type == "Credit Card"){
-            //         continue;
-            //     }
-            //     if(billMap.get(type) == null){
-            //         billMap.set(type, dict[amt2]);
-            //     }
-            //     else{
-            //         billMap.set(type, billMap[type] + dict[amt2]);
-            //     }
-            // }
-
-            // let depositTotal = 0.0;
-            // for(let i = 0; i < arrDeposits.length; i++){
-            //     let dict = arrDeposits[i];
-            //     depositTotal += dict[amount];
-            // }
-
-            // let purchaseMap = new Map();
-            // for(let i = 0; i < arrPurchases.length; i++){
-            //     let dict = arrPurchases[i];
-            //     let type = dict[purch];
-            //     let findKey2 = findKey(type, categories);
-            //     if(findKey2 == null){
-            //         continue;
-            //     }
-            //     if(billMap.get(findKey2) == null){
-            //         billMap.set(findKey2, dict[amt]);
-            //     }
-            //     else{
-            //         billMap.set(findKey2, purchaseMap[type] + dict[amt2]);
-            //     }
-            // }
-
         }
 
+
+
+
+
+
+        // const mapResult = handleData();
         const ctx = document.getElementById("myChart").getContext("2d");
         const myChart = new Chart(ctx, {
             type: "pie",
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels: /*['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange']*/ Array.from(handleData().keys()),
                 datasets: [{
                     label: '# of Votes',
-                    data: sumOfList([12, 19, 3, 5, 2, 3]),
+                    data: sumOfList(Array.from(handleData().values())),
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
