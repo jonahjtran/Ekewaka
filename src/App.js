@@ -23,7 +23,7 @@ function App() {
   }, []);
 
   return (
-    <GoogleOAuthProvider clientId="267940806546-l6gari008bu1257k4ok086pqa2fq9ljj.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId="267940806546-plejk9pe4vrhnf4is65g3gvk8o62qdqn.apps.googleusercontent.com">
       <Router>
         <div className={`app ${isSidebarOpen ? 'sidebar-open' : ''}`}>
           <SettingsSidebar
