@@ -37,7 +37,7 @@
         Returns:
 
         */
-        function handleData(/*arrPurchases, arrBills, arrDeposits*/){ // arr is an array of objects, categories is a dictionary
+        function handleData(){
             const amt = "amount"; //Purchases and Deposits Use Amount
             const amt2 = "payment_amount"; // Bills use payment_amount
             const purch = "merchant_id"; // Purchases use merchant_id
@@ -110,6 +110,7 @@
                     overallMap.set(findKey2, overallMap.get(findKey2) + dict[amt]);
                 }
             }
+
             overallMap.set("Deposits", depositTotal);
             return overallMap;
         }
@@ -119,15 +120,15 @@
 
 
 
-        // const mapResult = handleData();
+        const mapResult = handleData();
         const ctx = document.getElementById("myChart").getContext("2d");
         const myChart = new Chart(ctx, {
             type: "pie",
             data: {
-                labels: /*['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange']*/ Array.from(handleData().keys()),
+                labels: Array.from(mapResult.keys()),
                 datasets: [{
                     label: '# of Votes',
-                    data: sumOfList(Array.from(handleData().values())),
+                    data: sumOfList(Array.from(mapResult.values())),
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
