@@ -16,7 +16,7 @@ function ChatAnalysisPage() {
     // Handle initial goal from landing page
     if (location.state?.initialGoal) {
       const initialGoal = location.state.initialGoal;
-      const initialResponse = location.state.initialResponse;
+      const initialResponse = onSent(initialGoal);
       
       // Add initial user message
       const userMessage = {
