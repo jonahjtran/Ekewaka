@@ -79,7 +79,7 @@ function LandingPage() {
     console.log(extractedPurchases);
     console.log(extractedDeposits);
     console.log(extractedBills);
-    navigate('/chat-analysis', { state: { initialGoal: financialGoal } });
+    navigate('/chat-analysis', { state: { initialGoal: financialGoal , extractedPurchases: extractedPurchases, extractedDeposits: extractedDeposits, extractedBills: extractedBills} });
   };
 
   const adjustHeight = (element) => {

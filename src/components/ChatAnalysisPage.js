@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { context } from './context/context';
 import './ChatAnalysisPage.css';
+import { flushSync } from 'react-dom';
 
 function ChatAnalysisPage() {
   const [messages, setMessages] = useState([]);
@@ -15,25 +16,43 @@ function ChatAnalysisPage() {
   useEffect(() => {
     // Handle initial goal from landing page
     if (location.state?.initialGoal) {
-      const initialGoal = location.state.initialGoal;
-      const initialResponse = onSent(initialGoal);
-      
-      // Add initial user message
-      const userMessage = {
-        text: initialGoal,
-        sender: 'user',
-        timestamp: new Date().toLocaleTimeString()
-      };
-      
-      // Add initial bot response
-      const botMessage = {
-        text: initialResponse || "I understand you want to achieve this financial goal. Let me analyze it and provide some recommendations. Could you please share your current monthly income and major expenses?",
-        sender: 'bot',
-        timestamp: new Date().toLocaleTimeString()
-      };
+      const doTheThings = async() => {
+        const initialGoal = location.state.initialGoal;
+        const purchasesString = location.state.extractedPurchases.map(p => 
+          `Purchase of $${p.amount} at ${p.merchant_id} on ${p.purchase_date}`
+        ).join('. ');
+        const depositsString = location.state.extractedDeposits.map(d =>
+          `Deposit of $${d.amount} on ${d.transaction_date}`
+        ).join('. ');
+        const billsString = location.state.extractedBills.map(b =>
+          `Bill payment of $${b.payment_amount} to ${b.payee} due on ${b.payment_date}`
+        ).join('. ');
+        
+        const dataString = `Here is your financial data:\n\nPurchases: ${purchasesString}`;
+        const categories = await onSent("This is related to financial purposes.  Please analyze this data and decide on a series of spending categories.  Then, organize each company into a category.  Please output this information as a map of the format {category: [company1, company2, ...], category2: [company1, company2, ...]}."  + dataString );
+        const initialResponse = await onSent(initialGoal);
+        const cleanedString = categories.replace(/^"|"$/g, "").trim();
+        const categoriesObject = JSON.parse(cleanedString.substring(7, cleanedString.length - 3));
+            
+        localStorage.setItem('categories', JSON.stringify(categoriesObject));
+        // Add initial user message
+        const userMessage = {
+          text: initialGoal,
+          sender: 'user',
+          timestamp: new Date().toLocaleTimeString()
+        };
+        
+        // Add initial bot response
+        const botMessage = {
+          text: initialResponse || "I understand you want to achieve this financial goal. Let me analyze it and provide some recommendations. Could you please share your current monthly income and major expenses?",
+          sender: 'bot',
+          timestamp: new Date().toLocaleTimeString()
+        };
 
-      setMessages([userMessage, botMessage]);
-      setShowGraph(true); // Show graph when initial goal is set
+        setMessages([userMessage, botMessage]);
+        setShowGraph(true); // Show graph when initial goal is set
+      }
+      doTheThings();
     }
   }, [location.state]);
 
