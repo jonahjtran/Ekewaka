@@ -13,7 +13,35 @@
   width: 90%;
   max-width: 1200px;
   margin: auto;
-  position: relative; /* Add position relative for absolute positioning of logo */
+  position: relative;
+}
+
+.settings-button {
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 10px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.settings-button:hover {
+  background-color: #e9ecef;
+}
+
+.hamburger-line {
+  width: 20px;
+  height: 2px;
+  background-color: #333;
+  transition: transform 0.3s ease;
 }
 
 .logo {
@@ -32,13 +60,14 @@
 }
 
 .navigation {
-  margin-left: auto; /* Push navigation to the right */
+  margin-left: auto;
 }
 
 .navigation ul {
   list-style: none;
   display: flex;
   gap: 20px;
+  align-items: center;
 }
 
 .navigation a {
