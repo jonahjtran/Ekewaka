@@ -1,19 +1,27 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { GoogleLogin } from '@react-oauth/google';
 import './LoginPage.css';
 
 function LoginPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
-  const handleGoogleLogin = () => {
-    // TODO: Implement Google OAuth
-    console.log('Google login clicked');
+  const handleGoogleSuccess = (credentialResponse) => {
+    console.log('Google login success:', credentialResponse);
+    // TODO: Send the credential to your backend
+    setIsLoggedIn(true);
+  };
+
+  const handleGoogleError = () => {
+    console.error('Google login failed');
   };
 
   const handleBankConnection = () => {
     // TODO: Implement Plaid or similar bank connection
     console.log('Connect bank account clicked');
+    // For now, just navigate to home after "connecting" bank
+    navigate('/');
   };
 
   return (
@@ -26,14 +34,17 @@ function LoginPage() {
 
         {!isLoggedIn ? (
           <div className="auth-section">
-            <button className="google-login-button" onClick={handleGoogleLogin}>
-              <img 
-                src="/google-icon.svg" 
-                alt="Google" 
-                className="google-icon"
+            <div className="google-login-wrapper">
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={handleGoogleError}
+                useOneTap
+                theme="filled_blue"
+                shape="rectangular"
+                text="signin_with"
+                size="large"
               />
-              Sign in with Google
-            </button>
+            </div>
             <div className="login-divider">
               <span>or</span>
             </div>
