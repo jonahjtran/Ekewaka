@@ -47,7 +47,7 @@ function ChatAnalysisPage() {
         setMessages([userMessage]);
         
         try {
-          const initialResponse = await onSent(initialGoal);
+          const initialResponse = await onSent("Here is the goal that I am trying to achieve: " + initialGoal + ".  Here is the data that I have collected on purchases, deposits (income), and bills: " + purchasesString + ", " + depositsString + ", " + billsString +  ".  Please tell me how I can change my spending habits to achieve this goal.");
           // Add initial bot response
           const botMessage = {
             text: initialResponse || "I understand you want to achieve this financial goal. Let me analyze it and provide some recommendations. Could you please share your current monthly income and major expenses?",
