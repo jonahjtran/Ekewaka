@@ -30,9 +30,11 @@ function ChatAnalysisPage() {
         
         const dataString = `Here is your financial data:\n\nPurchases: ${purchasesString}`;
         const categories = await onSent("This is related to financial purposes.  Please analyze this data and decide on a series of spending categories.  Then, organize each company into a category.  Please output this information as a map of the format {category: [company1, company2, ...], category2: [company1, company2, ...]}."  + dataString );
-        const initialResponse = await onSent(initialGoal);
-        const cleanedString = categories.replace(/^"|"$/g, "").trim();
-        const categoriesObject = JSON.parse(cleanedString.substring(7, cleanedString.length - 3));
+        const start = categories.indexOf('{');
+        const end = categories.indexOf('}',start)+1;
+        const cleanedString = categories.substring(start,end);
+        const categoriesObject = JSON.parse(cleanedString);
+        console.log("ASDFSDFSDF",categoriesObject);
             
         localStorage.setItem('categories', JSON.stringify(categoriesObject));
         // Add initial user message
