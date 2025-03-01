@@ -91,8 +91,29 @@
 }
 
 /* Income Section */
-.income-section .input-with-prefix:last-child {
+.income-section .income-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.income-section .income-item:last-child {
   margin-bottom: 0;
+}
+
+.income-section .income-item label {
+  font-size: 0.85rem;
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.income-section .input-with-prefix {
+  margin-bottom: 0;
+  width: 100%;
+}
+
+.income-section .settings-input {
+  width: 100%;
 }
 
 /* Expenses Section */

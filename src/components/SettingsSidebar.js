@@ -99,28 +99,32 @@ const SettingsSidebar = ({ isOpen, onClose, userBankConnected = false, isLoggedI
         </div>
 
         <div className="settings-section income-section">
-          <h3>Income Information</h3>
-          <div className="input-with-prefix">
-            <span className="prefix">$</span>
-            <input
-              type="number"
-              value={annualSalary}
-              onChange={(e) => setAnnualSalary(e.target.value)}
-              onWheel={preventScroll}
-              placeholder="Annual Salary"
-              className="settings-input"
-            />
+          <h3>Income Info</h3>
+          <div className="income-item">
+            <div className="input-with-prefix">
+              <span className="prefix">$</span>
+              <input
+                type="number"
+                value={annualSalary}
+                onChange={(e) => setAnnualSalary(e.target.value)}
+                onWheel={preventScroll}
+                placeholder="Annual Salary"
+                className="settings-input"
+              />
+            </div>
           </div>
-          <div className="input-with-prefix">
-            <span className="prefix">$</span>
-            <input
-              type="number"
-              value={monthlyIncome}
-              onChange={(e) => setMonthlyIncome(e.target.value)}
-              onWheel={preventScroll}
-              placeholder="Monthly Take-Home Income"
-              className="settings-input"
-            />
+          <div className="income-item">
+            <div className="input-with-prefix">
+              <span className="prefix">$</span>
+              <input
+                type="number"
+                value={monthlyIncome}
+                onChange={(e) => setMonthlyIncome(e.target.value)}
+                onWheel={preventScroll}
+                placeholder="Monthly Take-Home Income"
+                className="settings-input"
+              />
+            </div>
           </div>
         </div>
 
