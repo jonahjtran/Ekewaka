@@ -6,7 +6,6 @@
 <body>
     <canvas id="myChart"></canvas>
     <script>
-
         function sumOfList(list){
             let sum = 0.0;
             for(var i = 0; i < list.length; i++){
@@ -20,6 +19,106 @@
                 newList.push(Math.floor(temp3 * 100));
             }
             return newList;
+        }
+
+        // Returns the key associated with the value
+        function findKey(value, categories){
+            for(const key of categories.keys()){
+                if(categories[key].includes(value)){
+                    return key;
+                }
+            }
+            return null;
+        }
+
+        /*
+        Each arr is an array of objects, containing information on the purchases, deposits, or Bills
+        Categories is a map, that is used only for the arrPurchases
+        Returns:
+
+        */
+        function handleData(arrPurchases, arrBills, arrDeposits){ // arr is an array of objects, categories is a dictionary
+            const amt = "amount"; //Purchases and Deposits Use Amount
+            const amt2 = "payment_amount"; // Bills use payment_amount
+            const purch = "merchant_id"; // Purchases use merchant_id
+            const bill = "payee"; // Bills use payee
+            const categories = JSON.parse(localStorage.getItem('categories'));
+
+            let overallMap = new Map();
+            for(let i = 0; i < arrBills.length; i++){
+                let dict = arrBills[i];
+                let type = dict[bill];
+                if(type == "Credit Card"){
+                    continue;
+                }
+                if(!overallMap.has(type)){
+                    overallMap.set(type, dict[amt2]);
+                }
+                else{
+                    overallMap.set(type, overallMap.get(type) + dict[amt2]);
+                }
+            }
+            let depositTotal = 0.0;
+            for(let i = 0; i < arrDeposits.length; i++){
+                let dict = arrDeposits[i];
+                depositTotal += dict[amt];
+            }
+
+            for(let i = 0; i < arrPurchases.length; i++){
+                let dict = arrPurchases[i];
+                let type = dict[purch];
+                let findKey2 = findKey(type, categories);
+                if(findKey2 == null){
+                    continue;
+                }
+                if(!overallMap.has(findKey2)){
+                    overallMap.set(findKey2, dict[amt]);
+                }
+                else{
+                    overallMap.set(findKey2, overallMap.get(type) + dict[amt]);
+                }
+            }
+            overallMap.set("Deposits", depositTotal);
+
+            return overallMap;
+
+            // let billMap = new Map();
+            // for(let i = 0; i < arrBills.length; i++){
+            //     let dict = arrBills[i];
+            //     let type = dict[bill];
+            //     if(type == "Credit Card"){
+            //         continue;
+            //     }
+            //     if(billMap.get(type) == null){
+            //         billMap.set(type, dict[amt2]);
+            //     }
+            //     else{
+            //         billMap.set(type, billMap[type] + dict[amt2]);
+            //     }
+            // }
+
+            // let depositTotal = 0.0;
+            // for(let i = 0; i < arrDeposits.length; i++){
+            //     let dict = arrDeposits[i];
+            //     depositTotal += dict[amount];
+            // }
+
+            // let purchaseMap = new Map();
+            // for(let i = 0; i < arrPurchases.length; i++){
+            //     let dict = arrPurchases[i];
+            //     let type = dict[purch];
+            //     let findKey2 = findKey(type, categories);
+            //     if(findKey2 == null){
+            //         continue;
+            //     }
+            //     if(billMap.get(findKey2) == null){
+            //         billMap.set(findKey2, dict[amt]);
+            //     }
+            //     else{
+            //         billMap.set(findKey2, purchaseMap[type] + dict[amt2]);
+            //     }
+            // }
+
         }
 
         const ctx = document.getElementById("myChart").getContext("2d");
