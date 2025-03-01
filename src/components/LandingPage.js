@@ -39,7 +39,7 @@ function LandingPage() {
             <div className="input-wrapper">
               <textarea 
                 type="text" 
-                placeholder="Enter your financial goal and time frame" 
+                placeholder="Enter your financial goal" 
                 value={financialGoal} 
                 onChange={handleGoalChange} 
                 className="goal-input"
