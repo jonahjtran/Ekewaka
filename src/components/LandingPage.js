@@ -28,7 +28,7 @@ function LandingPage() {
   };
 
   return (
-    <div className="page-content">
+    <div className="landing-page-content">
       <section className="hero">
         <div className="container hero-container">
           <h2>Plan Your Financial Future with Confidence</h2>
