@@ -76,29 +76,27 @@ const SettingsSidebar = ({ isOpen, onClose, userBankConnected = false, isLoggedI
       </div>
 
       <form onSubmit={handleSubmit} className="settings-form">
-        {isLoggedIn && (
-          <div className="settings-section bank-section">
-            <h3>Bank Connection</h3>
-            <div className="bank-connection-status">
-              <label className="toggle-switch">
-                <input
-                  type="checkbox"
-                  checked={useBankData}
-                  onChange={() => setUseBankData(!useBankData)}
-                  disabled={!userBankConnected}
-                />
-                <span className="toggle-slider"></span>
-              </label>
-              <span className="connection-text">
-                {!userBankConnected ? (
-                  "No bank account connected"
-                ) : (
-                  useBankData ? "Using bank data" : "Bank data disabled"
-                )}
-              </span>
-            </div>
+        <div className="settings-section bank-section">
+          <h3>Bank Connection</h3>
+          <div className="bank-connection-status">
+            <label className="toggle-switch">
+              <input
+                type="checkbox"
+                checked={useBankData}
+                onChange={() => setUseBankData(!useBankData)}
+                disabled={!userBankConnected}
+              />
+              <span className="toggle-slider"></span>
+            </label>
+            <span className="connection-text">
+              {!userBankConnected ? (
+                "No bank account connected"
+              ) : (
+                useBankData ? "Using bank data" : "Bank data disabled"
+              )}
+            </span>
           </div>
-        )}
+        </div>
 
         <div className="settings-section income-section">
           <h3>Income Information</h3>
