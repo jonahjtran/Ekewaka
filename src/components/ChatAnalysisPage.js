@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import './ChatAnalysisPage.css';
 
 function ChatAnalysisPage() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
+  const [showGraph, setShowGraph] = useState(false);
   const location = useLocation();
+  const textareaRef = useRef(null);
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
     // Handle initial goal from landing page
@@ -26,8 +29,63 @@ function ChatAnalysisPage() {
       };
 
       setMessages([userMessage, botMessage]);
+      setShowGraph(true); // Show graph when initial goal is set
     }
   }, [location.state]);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  // Show graph when there are messages
+  useEffect(() => {
+    if (messages.length > 0) {
+      setShowGraph(true);
+    }
+  }, [messages]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const adjustTextareaHeight = () => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = 'auto';
+      const newHeight = Math.min(textarea.scrollHeight, 150);
+      textarea.style.height = `${newHeight}px`;
+    }
+  };
+
+  const handleMessageChange = (e) => {
+    setNewMessage(e.target.value);
+    adjustTextareaHeight();
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (newMessage.trim()) {
+      const userMessage = {
+        text: newMessage,
+        sender: 'user',
+        timestamp: new Date().toLocaleTimeString()
+      };
+      
+      const botMessage = {
+        text: "Thank you for providing that information. I'm analyzing your budget and goals to provide personalized recommendations. Could you please specify your preferred timeline for achieving this goal?",
+        sender: 'bot',
+        timestamp: new Date().toLocaleTimeString()
+      };
+
+      setMessages([...messages, userMessage, botMessage]);
+      setNewMessage('');
+      setShowGraph(true); // Show graph when new message is sent
+      
+      if (textareaRef.current) {
+        textareaRef.current.style.height = '45px';
+      }
+    }
+  };
 
   // Dummy data for the graphs - replace with real data later
   const dummyBudgetData = {
@@ -47,32 +105,9 @@ function ChatAnalysisPage() {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (newMessage.trim()) {
-      // Add user message
-      const userMessage = {
-        text: newMessage,
-        sender: 'user',
-        timestamp: new Date().toLocaleTimeString()
-      };
-      
-      // Simulate bot response (replace with actual API call later)
-      const botMessage = {
-        text: "Thank you for providing that information. I'm analyzing your budget and goals to provide personalized recommendations. Could you please specify your preferred timeline for achieving this goal?",
-        sender: 'bot',
-        timestamp: new Date().toLocaleTimeString()
-      };
-
-      setMessages([...messages, userMessage, botMessage]);
-      setNewMessage('');
-    }
-  };
-
   return (
     <div className="chat-analysis-page">
-      <div className="main-content">
-        {/* Left side - Chat */}
+      <div className={`main-content ${showGraph ? 'graph-active' : ''}`}>
         <div className="chat-section">
           <div className="chat-messages">
             {messages.map((message, index) => (
@@ -83,15 +118,14 @@ function ChatAnalysisPage() {
                 </div>
               </div>
             ))}
+            <div ref={messagesEndRef} />
           </div>
         </div>
 
-        {/* Right side - Graphs */}
         <div className="graph-section">
           <div className="graph-container">
             <h3>Budget Comparison</h3>
             <div className="graph-placeholder">
-              {/* Replace with actual graph component */}
               <p>Budget visualization will go here</p>
               <div className="budget-legend">
                 <div className="legend-item">
@@ -108,15 +142,21 @@ function ChatAnalysisPage() {
         </div>
       </div>
 
-      {/* Bottom - Message Input */}
       <div className="message-input-section">
         <form onSubmit={handleSubmit} className="message-form">
           <textarea
+            ref={textareaRef}
             value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
+            onChange={handleMessageChange}
             placeholder="Type your message here..."
             className="message-input"
             rows="1"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSubmit(e);
+              }
+            }}
           />
           <button type="submit" className="send-button">
             Send

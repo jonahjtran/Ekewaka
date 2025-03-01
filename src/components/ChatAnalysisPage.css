@@ -1,41 +1,52 @@
 .chat-analysis-page {
-  height: 100vh;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  transition: all 0.3s ease;
+  height: calc(100vh - 7vh); /* Subtract navbar height */
+  min-height: 0; /* Ensure flex items can shrink */
 }
 
 .main-content {
   display: flex;
-  height: calc(93vh - 80px); /* Subtract navbar and input section height */
-  padding: 20px;
-  gap: 20px;
-  width: 100%;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0; /* Ensure flex items can shrink */
   transition: all 0.3s ease;
 }
 
-/* Chat Section Styles */
 .chat-section {
   flex: 1;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  min-height: 0; /* Ensure flex items can shrink */
   transition: all 0.3s ease;
-  min-width: 0; /* Allow flex item to shrink below content size */
+  max-width: 100%;
 }
 
 .chat-messages {
   flex: 1;
   overflow-y: auto;
-  padding: 20px;
+  padding-right: 10px;
+  margin-bottom: 10px; /* Add space between messages and input */
+  max-width: 800px; /* Limit width of messages */
+  margin-left: auto;
+  margin-right: auto;
+  transition: all 0.3s ease;
+}
+
+/* When graph is active, adjust chat section */
+.graph-active .chat-section {
+  flex: 0 1 60%;
+  min-width: 400px;
+}
+
+.graph-active .chat-messages {
+  margin-right: 0;
 }
 
 .message {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   display: flex;
 }
 
@@ -47,62 +58,139 @@
   max-width: 70%;
   padding: 12px 16px;
   border-radius: 12px;
-  position: relative;
+  background: #f0f2f5;
 }
 
 .message.user .message-content {
   background: #007bff;
   color: white;
-  border-bottom-right-radius: 4px;
 }
 
 .message.bot .message-content {
   background: #f0f2f5;
-  color: #1c1e21;
-  border-bottom-left-radius: 4px;
 }
 
 .timestamp {
-  font-size: 0.75rem;
-  color: #65676b;
+  font-size: 0.8rem;
+  color: #666;
   margin-top: 4px;
   display: block;
 }
 
-/* Graph Section Styles */
-.graph-section {
-  width: 40%;
-  min-width: 300px; /* Minimum width for readability */
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+.message.user .timestamp {
+  color: #ccc;
+}
+
+/* Message input section */
+.message-input-section {
+  padding: 10px 20px;
+  background: white;
+  border-top: 1px solid #eee;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.message-form {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start; /* Align items to top */
+  max-width: 800px; /* Match chat messages max-width */
+  margin: 0 auto;
   transition: all 0.3s ease;
 }
 
+.graph-active .message-form {
+  margin-right: 0;
+}
+
+.message-input {
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  line-height: 1.5;
+  resize: none;
+  max-height: 150px;
+  min-height: 45px;
+  overflow-y: auto;
+  background: #fff;
+  display: block; /* Ensure block display */
+  margin: 0; /* Remove any default margins */
+  box-sizing: border-box; /* Include padding in height calculation */
+}
+
+.message-input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.send-button {
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  cursor: pointer;
+  height: 45px;
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
+  align-self: flex-end; /* Align button with bottom of input */
+  margin-bottom: 0; /* Remove any default margins */
+}
+
+.send-button:hover {
+  background: #0056b3;
+}
+
+/* Graph section */
+.graph-section {
+  width: 0;
+  padding: 0;
+  border-left: none;
+  background: #f8f9fa;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+/* When graph is active */
+.graph-active .graph-section {
+  width: 40%;
+  min-width: 350px;
+  padding: 20px;
+  border-left: 1px solid #eee;
+  opacity: 1;
+  overflow-y: auto;
+}
+
 .graph-container {
-  height: 100%;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .graph-container h3 {
   margin-bottom: 20px;
-  color: #1c1e21;
+  color: #333;
 }
 
 .graph-placeholder {
-  height: calc(100% - 60px);
-  border: 2px dashed #ddd;
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: #65676b;
+  text-align: center;
+  padding: 40px 20px;
+  background: #f8f9fa;
+  border-radius: 4px;
+  color: #666;
 }
 
 .budget-legend {
   margin-top: 20px;
   display: flex;
+  justify-content: center;
   gap: 20px;
 }
 
@@ -120,65 +208,47 @@
 }
 
 .old-budget-color {
-  background: #4e79a7;
+  background: #007bff;
 }
 
 .new-budget-color {
-  background: #59a14f;
+  background: #28a745;
 }
 
-/* Message Input Section Styles */
-.message-input-section {
-  padding: 20px;
-  background: #fff;
-  border-top: 1px solid #ddd;
-  width: 100%;
-  transition: all 0.3s ease;
-}
-
-.message-form {
-  display: flex;
-  gap: 10px;
-  width: 100%;
-}
-
-.message-input {
-  flex: 1;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  resize: none;
-  min-height: 45px;
-}
-
-.send-button {
-  padding: 0 20px;
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.send-button:hover {
-  background: #0056b3;
-}
-
-/* Responsive adjustments */
+/* Responsive styles */
 @media (max-width: 1024px) {
-  .main-content {
-    flex-direction: column;
+  .graph-active .chat-section {
+    flex: 0 1 55%;
   }
 
-  .graph-section {
-    width: 100%;
+  .graph-active .graph-section {
+    width: 45%;
   }
 }
 
 @media (max-width: 768px) {
   .main-content {
-    padding: 10px;
-    gap: 10px;
+    flex-direction: column;
+  }
+
+  .chat-section,
+  .graph-active .chat-section {
+    flex: 1;
+    width: 100%;
+  }
+
+  .graph-section,
+  .graph-active .graph-section {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid #eee;
+  }
+
+  .message-form {
+    flex-direction: column;
+  }
+
+  .send-button {
+    width: 100%;
   }
 } 
