@@ -14,28 +14,38 @@ function ChatAnalysisPage() {
 
   useEffect(() => {
     // Handle initial goal from landing page
-    if (location.state?.initialGoal) {
-      const initialGoal = location.state.initialGoal;
-      const initialResponse = onSent(initialGoal);
-      
-      // Add initial user message
-      const userMessage = {
-        text: initialGoal,
-        sender: 'user',
-        timestamp: new Date().toLocaleTimeString()
-      };
-      
-      // Add initial bot response
-      const botMessage = {
-        text: initialResponse || "I understand you want to achieve this financial goal. Let me analyze it and provide some recommendations. Could you please share your current monthly income and major expenses?",
-        sender: 'bot',
-        timestamp: new Date().toLocaleTimeString()
-      };
+    const handleInitialGoal = async () => {
+      if (location.state?.initialGoal) {
+        const initialGoal = location.state.initialGoal;
+        
+        // Add initial user message
+        const userMessage = {
+          text: initialGoal,
+          sender: 'user',
+          timestamp: new Date().toLocaleTimeString()
+        };
+        
+        setMessages([userMessage]);
+        
+        try {
+          const initialResponse = await onSent(initialGoal);
+          // Add initial bot response
+          const botMessage = {
+            text: initialResponse || "I understand you want to achieve this financial goal. Let me analyze it and provide some recommendations. Could you please share your current monthly income and major expenses?",
+            sender: 'bot',
+            timestamp: new Date().toLocaleTimeString()
+          };
+          
+          setMessages(prev => [...prev, botMessage]);
+          setShowGraph(true); // Show graph when initial goal is set
+        } catch (error) {
+          console.error("Error getting initial response:", error);
+        }
+      }
+    };
 
-      setMessages([userMessage, botMessage]);
-      setShowGraph(true); // Show graph when initial goal is set
-    }
-  }, [location.state]);
+    handleInitialGoal();
+  }, [location.state, onSent]);
 
   useEffect(() => {
     scrollToBottom();
@@ -70,38 +80,68 @@ function ChatAnalysisPage() {
     e.preventDefault();
     if (newMessage.trim()) {
       const userMessage = {
-        text: newMessage,
+        text: newMessage.trim(),
         sender: 'user',
         timestamp: new Date().toLocaleTimeString()
       };
       
+      // Immediately add user message and clear input
       setMessages(prev => [...prev, userMessage]);
       setNewMessage('');
       
-      try {
-        const response = await onSent(newMessage);
-        const botMessage = {
-          text: response,
-          sender: 'bot',
-          timestamp: new Date().toLocaleTimeString()
-        };
-        
-        setMessages(prev => [...prev, botMessage]);
-      } catch (error) {
-        console.error("Error getting response from Gemini:", error);
-        const errorMessage = {
-          text: "I apologize, but I'm having trouble processing your request at the moment. Please try again.",
-          sender: 'bot',
-          timestamp: new Date().toLocaleTimeString()
-        };
-        setMessages(prev => [...prev, errorMessage]);
-      }
-      
-      setShowGraph(true);
-      
+      // Reset textarea height
       if (textareaRef.current) {
         textareaRef.current.style.height = '45px';
       }
+      
+      try {
+        console.log("Sending message:", userMessage.text);
+        
+        // Show loading state
+        const loadingMessage = {
+          text: "Thinking...",
+          sender: 'bot',
+          timestamp: new Date().toLocaleTimeString(),
+          isLoading: true
+        };
+        setMessages(prev => [...prev, loadingMessage]);
+        
+        const response = await onSent(userMessage.text);
+        console.log("Received response:", response);
+        
+        if (!response) {
+          throw new Error("Empty response received from Gemini");
+        }
+        
+        // Remove loading message and add actual response
+        setMessages(prev => {
+          const filtered = prev.filter(msg => !msg.isLoading);
+          return [...filtered, {
+            text: response,
+            sender: 'bot',
+            timestamp: new Date().toLocaleTimeString()
+          }];
+        });
+      } catch (error) {
+        console.error("Detailed chat error:", {
+          error: error.message,
+          stack: error.stack,
+          message: userMessage.text
+        });
+        
+        // Remove loading message and add error message
+        setMessages(prev => {
+          const filtered = prev.filter(msg => !msg.isLoading);
+          return [...filtered, {
+            text: `Error: ${error.message || "Unable to get a response. Please check your API key and try again."}`,
+            sender: 'bot',
+            timestamp: new Date().toLocaleTimeString(),
+            isError: true
+          }];
+        });
+      }
+      
+      setShowGraph(true);
     }
   };
 
