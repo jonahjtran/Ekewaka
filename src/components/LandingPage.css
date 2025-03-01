@@ -84,17 +84,21 @@
   padding: 10px;
   border: none;
   border-radius: 5px;
-  width: 300px;
+  height: 40px;
+  width: 500px;
   font-size: 1rem;
+  font-family: Arial;
+  border: 2px solid #a89e9e;
 }
   
   .cta-button {
-    background: #007bff;
+    background: #4d95e3;
     color: #000000;
     padding: 10px 30px;
-    text-decoration: none;
+    text-decoration: Arial;
     border-radius: 5px;
     transition: background 0.3s ease;
+    border: 2px solid #000000
   }
   
   .cta-button:hover {
