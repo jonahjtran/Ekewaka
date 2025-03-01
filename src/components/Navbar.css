@@ -22,6 +22,13 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  text-decoration: none;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.logo:hover {
+  color: #007bff;
 }
 
 .navigation {
@@ -38,4 +45,9 @@
   text-decoration: none;
   color: #333;
   font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navigation a:hover {
+  color: #007bff;
 } 
