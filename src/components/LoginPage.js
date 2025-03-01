@@ -45,12 +45,6 @@ function LoginPage() {
                 size="large"
               />
             </div>
-            <div className="login-divider">
-              <span>or</span>
-            </div>
-            <button className="guest-button" onClick={() => navigate('/')}>
-              Continue as Guest
-            </button>
           </div>
         ) : (
           <div className="bank-connection-section">

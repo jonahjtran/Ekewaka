@@ -3,131 +3,213 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f8f9fa;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 20px;
 }
 
 .login-container {
   background: white;
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 80px 60px;
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
   width: 100%;
-  max-width: 400px;
+  max-width: 680px;
   text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.login-container:hover {
+  transform: translateY(-2px);
 }
 
 .login-container h1 {
-  margin-bottom: 20px;
-  color: #333;
-  font-size: 2rem;
+  margin-bottom: 32px;
+  color: #2d3748;
+  font-size: 3.2rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1.2;
+  padding: 0 20px;
 }
 
 .login-description {
-  color: #666;
-  margin-bottom: 30px;
-  font-size: 1rem;
-  line-height: 1.5;
+  color: #718096;
+  margin-bottom: 48px;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  padding: 0 40px;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .auth-section {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  align-items: center;
+  gap: 32px;
+  padding: 0 20px;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 .google-login-wrapper {
   display: flex;
-  justify-content: center;
-  margin-bottom: 10px;
-}
-
-.login-divider {
-  display: flex;
+  flex-direction: column;
   align-items: center;
-  text-align: center;
-  margin: 15px 0;
+  width: 100%;
+  position: relative;
+  padding: 20px 0;
 }
 
-.login-divider::before,
-.login-divider::after {
+.google-login-wrapper::before {
   content: '';
-  flex: 1;
-  border-bottom: 1px solid #ddd;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
+  border-radius: 2px;
 }
 
-.login-divider span {
-  padding: 0 10px;
-  color: #666;
-  font-size: 0.9rem;
+/* Style for Google button container */
+.google-login-wrapper > div {
+  width: 100% !important;
+  max-width: 400px !important;
+  transform: scale(1.4);
+  margin: 20px 0;
 }
 
-.guest-button {
-  background: #f8f9fa;
-  color: #333;
-  border: 1px solid #ddd;
-  padding: 12px 24px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
+/* Style for Google button iframe */
+.google-login-wrapper iframe {
+  width: 100% !important;
+  height: 44px !important;
 }
 
-.guest-button:hover {
-  background: #e9ecef;
+/* Custom styles to override Google button */
+.google-login-wrapper button {
+  width: 100% !important;
+  height: 100% !important;
+  padding: 0 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.3s ease !important;
+}
+
+.google-login-wrapper button:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15) !important;
+  transform: translateY(-1px) !important;
 }
 
 .bank-connection-section {
   text-align: center;
+  margin-top: 32px;
+  padding: 32px;
+  background: #f8fafc;
+  border-radius: 16px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .bank-connection-section h2 {
-  color: #333;
-  margin-bottom: 15px;
+  color: #2d3748;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  font-weight: 700;
 }
 
 .bank-connection-section p {
-  color: #666;
-  margin-bottom: 25px;
+  color: #718096;
+  margin-bottom: 32px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  padding: 0 20px;
 }
 
 .connect-bank-button {
-  background: #007bff;
+  background: #4299e1;
   color: white;
   border: none;
-  padding: 12px 24px;
-  border-radius: 4px;
+  padding: 16px 32px;
+  border-radius: 12px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.1rem;
   width: 100%;
-  margin-bottom: 15px;
-  transition: background-color 0.3s ease;
+  max-width: 320px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(66, 153, 225, 0.15);
 }
 
 .connect-bank-button:hover {
-  background: #0056b3;
+  background: #3182ce;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(66, 153, 225, 0.2);
 }
 
 .skip-button {
   background: transparent;
-  color: #666;
-  border: none;
-  padding: 12px 24px;
+  color: #718096;
+  border: 1px solid #e2e8f0;
+  padding: 16px 32px;
+  border-radius: 12px;
   cursor: pointer;
-  font-size: 0.9rem;
-  text-decoration: underline;
-  transition: color 0.3s ease;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 320px;
+  transition: all 0.3s ease;
+  font-weight: 500;
 }
 
 .skip-button:hover {
-  color: #333;
+  background: #f8fafc;
+  color: #2d3748;
+  border-color: #cbd5e0;
+}
+
+@media (max-width: 768px) {
+  .login-container {
+    padding: 60px 40px;
+  }
+
+  .login-container h1 {
+    font-size: 2.8rem;
+    padding: 0 10px;
+  }
+
+  .login-description {
+    font-size: 1.1rem;
+    padding: 0 20px;
+  }
+
+  .bank-connection-section {
+    padding: 24px;
+  }
 }
 
 @media (max-width: 480px) {
   .login-container {
-    padding: 30px 20px;
+    padding: 40px 24px;
   }
 
   .login-container h1 {
-    font-size: 1.8rem;
+    font-size: 2.4rem;
+  }
+
+  .login-description {
+    font-size: 1rem;
+    padding: 0;
+  }
+
+  .bank-connection-section {
+    padding: 20px;
+  }
+
+  .bank-connection-section h2 {
+    font-size: 1.5rem;
   }
 } 
