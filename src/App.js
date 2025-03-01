@@ -13,6 +13,7 @@ function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
+    console.log('App component mounted');
     const handleToggleSidebar = () => {
       setIsSidebarOpen(prev => !prev);
     };

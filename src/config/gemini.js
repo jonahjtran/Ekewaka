@@ -1,12 +1,10 @@
-require('dotenv').config();
-
-const {
+import {
     GoogleGenerativeAI,
     HarmCategory,
     HarmBlockThreshold,
-  } = require("@google/generative-ai");
+  } from "@google/generative-ai";
   
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = process.env.REACT_APP_GEMINI_API_KEY;
   const genAI = new GoogleGenerativeAI(apiKey);
   
   const model = genAI.getGenerativeModel({
@@ -23,14 +21,26 @@ const {
   };
   
   async function run(prompt) {
-    const chatSession = model.startChat({
-      generationConfig,
-      history: [
-      ],
-    });
+    try {
+      console.log("Starting Gemini API call with prompt:", prompt);
+      console.log("API Key present:", !!apiKey);
+      
+      const chatSession = model.startChat({
+        generationConfig,
+        history: [
+        ],
+      });
   
-    const result = await chatSession.sendMessage(prompt);
-    console.log(result.response.text());
+      console.log("Chat session created, sending message...");
+      const result = await chatSession.sendMessage(prompt);
+      console.log("Message sent, getting response...");
+      const response = await result.response.text();
+      console.log("Gemini Response:", response);
+      return response;
+    } catch (error) {
+      console.error("Error in Gemini API call:", error);
+      throw error;
+    }
   }
   
   export default run;
