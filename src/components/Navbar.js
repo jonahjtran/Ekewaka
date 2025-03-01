@@ -3,17 +3,6 @@ import { Link } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
-  const handleScrollToSection = (e, sectionId) => {
-    e.preventDefault();
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      // If we're not on the home page, navigate to home and then scroll
-      window.location.href = '/#' + sectionId;
-    }
-  };
-
   return (
     <header className="header">
       <div className="container header-container">
