@@ -19,7 +19,6 @@ const SettingsSidebar = ({ isOpen, onClose, userBankConnected = false, isLoggedI
     other: ''
   });
   const [savingsGoal, setSavingsGoal] = useState('');
-  const [riskTolerance, setRiskTolerance] = useState('moderate');
   const [retirementAge, setRetirementAge] = useState('');
   const [emergencyFundGoal, setEmergencyFundGoal] = useState('');
   const [useBankData, setUseBankData] = useState(userBankConnected);
@@ -57,7 +56,6 @@ const SettingsSidebar = ({ isOpen, onClose, userBankConnected = false, isLoggedI
       ...(savingsGoal && { savingsGoal }),
       ...(retirementAge && { retirementAge }),
       ...(emergencyFundGoal && { emergencyFundGoal }),
-      riskTolerance,
       useBankData
     };
 
@@ -78,36 +76,31 @@ const SettingsSidebar = ({ isOpen, onClose, userBankConnected = false, isLoggedI
       </div>
 
       <form onSubmit={handleSubmit} className="settings-form">
-        <div className="settings-section">
-          <h3>Bank Connection</h3>
-          <div className="bank-connection-status">
-            <label className="toggle-switch">
-              <input
-                type="checkbox"
-                checked={useBankData}
-                onChange={() => setUseBankData(!useBankData)}
-                disabled={!isLoggedIn || !userBankConnected}
-              />
-              <span className="toggle-slider"></span>
-            </label>
-            <span className="connection-text">
-              {!isLoggedIn ? (
-                "Login to connect bank account"
-              ) : userBankConnected ? (
-                "Using connected bank data"
-              ) : (
-                "No bank account connected"
-              )}
-            </span>
+        {isLoggedIn && (
+          <div className="settings-section bank-section">
+            <h3>Bank Connection</h3>
+            <div className="bank-connection-status">
+              <label className="toggle-switch">
+                <input
+                  type="checkbox"
+                  checked={useBankData}
+                  onChange={() => setUseBankData(!useBankData)}
+                  disabled={!userBankConnected}
+                />
+                <span className="toggle-slider"></span>
+              </label>
+              <span className="connection-text">
+                {!userBankConnected ? (
+                  "No bank account connected"
+                ) : (
+                  useBankData ? "Using bank data" : "Bank data disabled"
+                )}
+              </span>
+            </div>
           </div>
-          {!userBankConnected && isLoggedIn && (
-            <button className="connect-bank-button">
-              Connect Bank Account
-            </button>
-          )}
-        </div>
+        )}
 
-        <div className="settings-section">
+        <div className="settings-section income-section">
           <h3>Income Information</h3>
           <div className="input-with-prefix">
             <span className="prefix">$</span>
@@ -116,7 +109,7 @@ const SettingsSidebar = ({ isOpen, onClose, userBankConnected = false, isLoggedI
               value={annualSalary}
               onChange={(e) => setAnnualSalary(e.target.value)}
               onWheel={preventScroll}
-              placeholder="Annual Salary (optional)"
+              placeholder="Annual Salary"
               className="settings-input"
             />
           </div>
@@ -127,13 +120,13 @@ const SettingsSidebar = ({ isOpen, onClose, userBankConnected = false, isLoggedI
               value={monthlyIncome}
               onChange={(e) => setMonthlyIncome(e.target.value)}
               onWheel={preventScroll}
-              placeholder="Monthly Take-Home Income (optional)"
+              placeholder="Monthly Take-Home Income"
               className="settings-input"
             />
           </div>
         </div>
 
-        <div className="settings-section">
+        <div className="settings-section expenses-section">
           <h3>Monthly Expenses</h3>
           <div className="expenses-grid">
             {Object.entries(monthlyExpenses).map(([category, value]) => (
@@ -146,88 +139,89 @@ const SettingsSidebar = ({ isOpen, onClose, userBankConnected = false, isLoggedI
                     value={value}
                     onChange={(e) => handleExpenseChange(category, e.target.value)}
                     onWheel={preventScroll}
-                    placeholder={`Monthly ${category} (optional)`}
+                    placeholder={category.charAt(0).toUpperCase() + category.slice(1)}
                     className="settings-input"
                   />
                 </div>
               </div>
             ))}
-          </div>
-          <div className="total-expenses">
-            <span>Total Monthly Expenses:</span>
-            <span className="amount">${calculateTotalExpenses().toFixed(2)}</span>
+            <div className="total-expenses">
+              <span>Total Monthly Expenses</span>
+              <div className="amount">{calculateTotalExpenses().toFixed(2)}</div>
+            </div>
           </div>
         </div>
 
-        <div className="settings-section">
+        <div className="settings-section goals-section">
           <h3>Financial Goals</h3>
-          <div className="time-frame-input">
-            <input
-              type="number"
-              value={timeValue}
-              onChange={(e) => setTimeValue(e.target.value)}
-              onWheel={preventScroll}
-              placeholder="Goal timeframe (optional)"
-              min="0"
-              className="settings-input time-value"
-            />
-            <select 
-              value={timeUnit} 
-              onChange={(e) => setTimeUnit(e.target.value)}
-              className="settings-input time-unit"
-            >
-              <option value="months">Months</option>
-              <option value="years">Years</option>
-            </select>
-          </div>
-          
-          <div className="input-with-prefix">
-            <span className="prefix">$</span>
-            <input
-              type="number"
-              value={savingsGoal}
-              onChange={(e) => setSavingsGoal(e.target.value)}
-              onWheel={preventScroll}
-              placeholder="Total Savings Goal (optional)"
-              className="settings-input"
-            />
-          </div>
+          <div className="goals-grid">
+            <div className="goal-item">
+              <label>Goal Timeframe</label>
+              <div className="time-frame-input">
+                <input
+                  type="number"
+                  value={timeValue}
+                  onChange={(e) => setTimeValue(e.target.value)}
+                  onWheel={preventScroll}
+                  placeholder="Duration"
+                  min="0"
+                  className="settings-input time-value"
+                />
+                <select 
+                  value={timeUnit} 
+                  onChange={(e) => setTimeUnit(e.target.value)}
+                  className="settings-input time-unit"
+                >
+                  <option value="months">M</option>
+                  <option value="years">Y</option>
+                </select>
+              </div>
+            </div>
 
-          <div className="input-with-prefix">
-            <span className="prefix">$</span>
-            <input
-              type="number"
-              value={emergencyFundGoal}
-              onChange={(e) => setEmergencyFundGoal(e.target.value)}
-              onWheel={preventScroll}
-              placeholder="Emergency Fund Goal (optional)"
-              className="settings-input"
-            />
+            <div className="goal-item">
+              <label>Savings Goal</label>
+              <div className="input-with-prefix">
+                <span className="prefix">$</span>
+                <input
+                  type="number"
+                  value={savingsGoal}
+                  onChange={(e) => setSavingsGoal(e.target.value)}
+                  onWheel={preventScroll}
+                  placeholder="Target savings amount"
+                  className="settings-input"
+                />
+              </div>
+            </div>
+
+            <div className="goal-item">
+              <label>Emergency Fund</label>
+              <div className="input-with-prefix">
+                <span className="prefix">$</span>
+                <input
+                  type="number"
+                  value={emergencyFundGoal}
+                  onChange={(e) => setEmergencyFundGoal(e.target.value)}
+                  onWheel={preventScroll}
+                  placeholder="Emergency fund target"
+                  className="settings-input"
+                />
+              </div>
+            </div>
+
+            <div className="goal-item">
+              <label>Target Retirement Age</label>
+              <input
+                type="number"
+                value={retirementAge}
+                onChange={(e) => setRetirementAge(e.target.value)}
+                onWheel={preventScroll}
+                placeholder="Age"
+                min="0"
+                max="100"
+                className="settings-input"
+              />
+            </div>
           </div>
-
-          <input
-            type="number"
-            value={retirementAge}
-            onChange={(e) => setRetirementAge(e.target.value)}
-            onWheel={preventScroll}
-            placeholder="Target Retirement Age (optional)"
-            min="0"
-            max="100"
-            className="settings-input"
-          />
-        </div>
-
-        <div className="settings-section">
-          <h3>Risk Profile</h3>
-          <select 
-            value={riskTolerance} 
-            onChange={(e) => setRiskTolerance(e.target.value)}
-            className="settings-input"
-          >
-            <option value="conservative">Conservative</option>
-            <option value="moderate">Moderate</option>
-            <option value="aggressive">Aggressive</option>
-          </select>
         </div>
 
         <button type="submit" className="save-settings-button">
