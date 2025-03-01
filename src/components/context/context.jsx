@@ -28,7 +28,7 @@ const ContextProvider = (props) => {
             let newArray3 = newArray2.split("\\").join("");
 
 
-            return newArray2;
+            return newArray3;
         } catch (error) {
             console.error("ContextProvider: Error sending message to Gemini:", error);
             throw error; // Re-throw the error so it can be handled by the component
