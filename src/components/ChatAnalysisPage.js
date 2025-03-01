@@ -188,7 +188,7 @@ function ChatAnalysisPage() {
             {messages.map((message, index) => (
               <div key={index} className={`message ${message.sender}`}>
                 <div className="message-content">
-                  <p>{message.text}</p>
+                  <p dangerouslySetInnerHTML={{ __html: message.text }} />
                   <span className="timestamp">{message.timestamp}</span>
                 </div>
               </div>
