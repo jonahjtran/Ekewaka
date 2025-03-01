@@ -4,7 +4,7 @@ import './LandingPage.css';
 
 function LandingPage() {
   const [financialGoal, setFinancialGoal] = useState('');
-  const [isHowItWorksExpanded, setIsHowItWorksExpanded] = useState(true);
+  const [showHowItWorks, setShowHowItWorks] = useState(false);
   const navigate = useNavigate();
 
   const handleGoalChange = (e) => {
@@ -15,78 +15,80 @@ function LandingPage() {
   const handleGoalSubmit = (e) => {
     e.preventDefault();
     console.log("Financial goal submitted:", financialGoal);
-    // Navigate to the chat analysis page
     navigate('/chat-analysis', { state: { initialGoal: financialGoal } });
   };
 
   const adjustHeight = (element) => {
-    element.style.height = 'auto'; // Reset height
-    element.style.height = `${element.scrollHeight}px`; // Set height to scroll height
+    element.style.height = 'auto';
+    element.style.height = `${element.scrollHeight}px`;
   };
 
   const toggleHowItWorks = () => {
-    setIsHowItWorksExpanded(prev => !prev);
+    setShowHowItWorks(prev => !prev);
   };
 
   return (
-    <div className="landing-page">
+    <div className="landing-page-content">
       <section className="hero">
         <div className="container hero-container">
           <h2>Plan Your Financial Future with Confidence</h2>
           <p>
             Ekewaka helps you set and achieve your long-term financial goals with personalized planning and easy-to-use tools.
           </p>
-          {/* Financial Goal Input */}
           <form onSubmit={handleGoalSubmit} className="goal-form">
-            <textarea 
-              type="text" 
-              placeholder="Enter your financial goal and time frame" 
-              value={financialGoal} 
-              onChange={handleGoalChange} 
-              className="goal-input"
-              rows="1" // Start with one row
-            />
+            <div className="input-wrapper">
+              <textarea 
+                type="text" 
+                placeholder="Enter your financial goal and time frame" 
+                value={financialGoal} 
+                onChange={handleGoalChange} 
+                className="goal-input"
+                rows="1"
+              />
+              <button 
+                type="button" 
+                className="help-button"
+                onClick={toggleHowItWorks}
+                aria-label="How it works"
+              >
+                ?
+              </button>
+            </div>
             <button type="submit" className="cta-button">Submit Goal</button>
           </form>
         </div>
       </section>
 
-      <section className={`how-it-works ${isHowItWorksExpanded ? 'expanded' : 'minimized'}`}>
-        <div className="container">
-          <div className="section-header">
+      {showHowItWorks && (
+        <div className="modal-overlay" onClick={toggleHowItWorks}>
+          <div className="how-it-works-modal" onClick={e => e.stopPropagation()}>
+            <button className="modal-close" onClick={toggleHowItWorks}>&times;</button>
             <h2>How It Works</h2>
-            <button 
-              className="toggle-button" 
-              onClick={toggleHowItWorks}
-              aria-label={isHowItWorksExpanded ? "Minimize section" : "Expand section"}
-            >
-              {isHowItWorksExpanded ? '−' : '+'}
-            </button>
-          </div>
-          <div className="steps-grid">
-            <div className="step-card">
-              <div className="step-number">1</div>
-              <h3>Share Your Goal</h3>
-              <p>Tell us about your financial goals, whether it's saving for a home, planning for retirement, or building an emergency fund.</p>
-            </div>
-            <div className="step-card">
-              <div className="step-number">2</div>
-              <h3>AI Analysis</h3>
-              <p>Our AI assistant analyzes your goals and current financial situation through natural conversation.</p>
-            </div>
-            <div className="step-card">
-              <div className="step-number">3</div>
-              <h3>Get Your Plan</h3>
-              <p>Receive a personalized financial plan with actionable steps and visual budget comparisons.</p>
-            </div>
-            <div className="step-card">
-              <div className="step-number">4</div>
-              <h3>Track Progress</h3>
-              <p>Monitor your progress and get ongoing guidance as you work toward your financial objectives.</p>
+            <div className="steps-grid">
+              <div className="step-card">
+                <div className="step-number">1</div>
+                <h3>Share Your Goal</h3>
+                <p>Tell us about your financial goals, whether it's saving for a home, planning for retirement, or building an emergency fund.</p>
+              </div>
+              <div className="step-card">
+                <div className="step-number">2</div>
+                <h3>AI Analysis</h3>
+                <p>Our AI assistant analyzes your goals and current financial situation through natural conversation.</p>
+              </div>
+              <div className="step-card">
+                <div className="step-number">3</div>
+                <h3>Get Your Plan</h3>
+                <p>Receive a personalized financial plan with actionable steps and visual budget comparisons.</p>
+              </div>
+              <div className="step-card">
+                <div className="step-number">4</div>
+                <h3>Track Progress</h3>
+                <p>Monitor your progress and get ongoing guidance as you work toward your financial objectives.</p>
+              </div>
             </div>
           </div>
         </div>
-      </section>
+      )}
     </div>
   );
 }
