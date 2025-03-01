@@ -52,12 +52,18 @@
 
 .settings-section {
   margin-bottom: 25px;
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .settings-section h3 {
   color: #34495e;
-  margin-bottom: 12px;
+  margin-bottom: 15px;
   font-size: 1.1rem;
+  border-bottom: 2px solid #f0f2f5;
+  padding-bottom: 8px;
 }
 
 .settings-input {
@@ -66,12 +72,39 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 1rem;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
+  margin-bottom: 12px;
+  overflow: hidden;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+
+/* Prevent scrolling in number inputs */
+.settings-input[type="number"] {
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+
+.settings-input[type="number"]:hover,
+.settings-input[type="number"]:focus {
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+
+.settings-input::-webkit-inner-spin-button,
+.settings-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.settings-input::-webkit-scrollbar {
+  display: none;
 }
 
 .settings-input:focus {
   outline: none;
   border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
 }
 
 /* Time Frame Input Styles */
@@ -79,20 +112,43 @@
   display: flex;
   gap: 10px;
   align-items: center;
+  margin-bottom: 15px;
 }
 
 .time-value {
   flex: 2;
+  margin-bottom: 0;
 }
 
 .time-unit {
   flex: 1;
+  margin-bottom: 0;
+}
+
+/* Expenses Grid */
+.expenses-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.expense-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.expense-item label {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 5px;
 }
 
 .input-with-prefix {
   display: flex;
   align-items: center;
   width: 100%;
+  margin-bottom: 12px;
 }
 
 .prefix {
@@ -102,15 +158,34 @@
   border-right: none;
   border-radius: 4px 0 0 4px;
   color: #495057;
+  font-size: 0.9rem;
 }
 
 .input-with-prefix .settings-input {
   border-left: none;
   border-radius: 0 4px 4px 0;
   flex: 1;
+  margin-bottom: 0;
 }
 
-/* Toggle Switch Styles */
+/* Total Expenses */
+.total-expenses {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 4px;
+  margin-top: 20px;
+  border: 1px solid #ddd;
+}
+
+.total-expenses .amount {
+  font-weight: bold;
+  color: #28a745;
+}
+
+/* Bank Connection Status */
 .bank-connection-status {
   display: flex;
   align-items: center;
@@ -177,7 +252,7 @@ input:checked + .toggle-slider:before {
   background-color: #007bff;
   color: white;
   border: none;
-  padding: 8px 16px;
+  padding: 12px;
   border-radius: 4px;
   cursor: pointer;
   font-size: 0.9rem;
@@ -218,9 +293,12 @@ input:checked + .toggle-slider:before {
     width: 100%;
   }
 
+  .expenses-grid {
+    grid-template-columns: 1fr;
+  }
+
   .time-frame-input {
     flex-direction: column;
-    gap: 8px;
   }
 
   .time-value,
