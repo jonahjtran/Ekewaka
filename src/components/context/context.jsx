@@ -25,6 +25,7 @@ const ContextProvider = (props) => {
                 }
             }
             let newArray2 = newArray.split("*").join("</br></br>");
+            let newArray3 = newArray2.split("\\").join("");
 
 
             return newArray2;
