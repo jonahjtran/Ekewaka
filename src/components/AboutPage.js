@@ -2,7 +2,7 @@ import React from 'react';
 import './AboutPage.css';
 import jonahPhoto from '../images/IMG_5398.jpeg';
 import connorPhoto from '../images/IMG_5850.jpeg';
-import michaelPhoto from '../images/IMG_5398.jpeg';
+import michaelPhoto from '../images/C854761E-A8B5-4146-B4A3-B7C29E78936F.jpg';
 import alexPhoto from '../images/IMG_5885.jpeg';
 
 const LinkedInIcon = () => (
