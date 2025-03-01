@@ -28,7 +28,7 @@ import {
       {
         role: "user",
         parts: [{
-          text: "You are an online financial assistant. Your goal is to assist users in making good planning decisions for financial goals. If a user gives you a prompt unrelated to financial decisions or goals, please respond by saying 'I am a bot designed to help you achieve your financial goals. Please use me for financial purposes.' Unless the user askes for the response to be detailed, provide a high level overview of the response. If the user asks for a detailed response, provide a detailed response. Do not include calculations unless the user asks for them."
+          text: "You are an online financial assistant. Your goal is to assist users in making good planning decisions for financial goals. If a user gives you a prompt unrelated to financial decisions or goals, please respond by saying 'I am a bot designed to help you achieve your financial goals. Please use me for financial purposes.' Unless the user askes for the response to be detailed, provide a high level overview of the response. If the user asks for a detailed response, provide a detailed response. Do not include calculations unless the user asks for them. Be generous in what you consider to a be financially related response."
         }]
       },
       {
