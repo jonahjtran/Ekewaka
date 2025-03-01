@@ -1,20 +1,77 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { context } from './context/context';
 import './LandingPage.css';
 
 function LandingPage() {
   const [financialGoal, setFinancialGoal] = useState('');
   const [showHowItWorks, setShowHowItWorks] = useState(false);
   const navigate = useNavigate();
+  const { onSent } = useContext(context);
 
   const handleGoalChange = (e) => {
     setFinancialGoal(e.target.value);
     adjustHeight(e.target);
   };
 
-  const handleGoalSubmit = (e) => {
+  const handleGoalSubmit = async (e) => {
+    const merchant_id_mapping = {
+      "67c2b24d9683f20dd518c08d":"Amazon",
+      "67c2b2619683f20dd518c08e":"Walmart",
+      "67c2b2749683f20dd518c08f":"Target",
+      "67c2b2869683f20dd518c090":"Costco",
+      "67c2b2949683f20dd518c091":"Best Buy",
+      "67c2b2a69683f20dd518c092":"Home Depot",
+      "67c2b2b49683f20dd518c093":"Lowe's",
+      "67c2b2c09683f20dd518c094":"Starbucks",
+      "67c2b2ce9683f20dd518c095":"McDonald's",
+      "67c2b2da9683f20dd518c096":"Chipotle",
+      "67c2b2e79683f20dd518c097":"Netflix",
+      "67c2b2f49683f20dd518c098":"Spotify",
+      "67c2b3019683f20dd518c099":"Uber",
+      "67c2b30f9683f20dd518c09a":"Lyft",
+      "67c2b31f9683f20dd518c09f":"Airbnb",
+      "67c2b32a9683f20dd518c0a0":"Expedia",
+      "67c2b3399683f20dd518c0a1":"Apple",
+      "67c2b3499683f20dd518c0a2":"Google Play",
+      "67c2b3579683f20dd518c0a3":"Nike",
+      "67c2b3689683f20dd518c0a4":"Adidas",
+      "67c2b37c9683f20dd518c0a5":"Sephora",
+      "67c2b3889683f20dd518c0a6":"CVS",
+      "67c2b3959683f20dd518c0a7":"Walgreens",
+      "67c2b3a09683f20dd518c0a8":"Shell",
+      "67c2b3a99683f20dd518c0a9":"BP"
+    }
     e.preventDefault();
     console.log("Financial goal submitted:", financialGoal);
+    const apiKey = process.env.REACT_APP_NESSIE_API_KEY;
+    const user_id = "67c28f299683f20dd518c026";
+    const purchase_url = `http://api.nessieisreal.com/accounts/${user_id}/purchases?key=${apiKey}`;
+    const purchase_response = await fetch(purchase_url);
+    const purchases = await purchase_response.json();
+    const deposit_url = `http://api.nessieisreal.com/accounts/${user_id}/deposits?key=${apiKey}`;
+    const deposit_response = await fetch(deposit_url);
+    const deposits = await deposit_response.json();
+    const bill_url = `http://api.nessieisreal.com/accounts/${user_id}/bills?key=${apiKey}`;
+    const bill_response = await fetch(bill_url);
+    const bills = await bill_response.json();
+    const extractedPurchases = purchases.map(item => ({
+      merchant_id: merchant_id_mapping[item.merchant_id],
+      purchase_date: item.purchase_date,
+      amount: item.amount
+    }));
+    const extractedDeposits = deposits.map(item => ({
+      transaction_date: item.transaction_date,
+      amount: item.amount,
+    }));
+    const extractedBills = bills.map(item => ({
+      payee: item.payee,
+      payment_date: item.payment_date,
+      payment_amount: item.payment_amount
+    }));
+    console.log(extractedPurchases);
+    console.log(extractedDeposits);
+    console.log(extractedBills);
     navigate('/chat-analysis', { state: { initialGoal: financialGoal } });
   };
 

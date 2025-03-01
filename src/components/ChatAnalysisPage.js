@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
+import { context } from './context/context';
 import './ChatAnalysisPage.css';
 
 function ChatAnalysisPage() {
@@ -9,11 +10,14 @@ function ChatAnalysisPage() {
   const location = useLocation();
   const textareaRef = useRef(null);
   const messagesEndRef = useRef(null);
+  const { onSent } = useContext(context);
 
   useEffect(() => {
     // Handle initial goal from landing page
     if (location.state?.initialGoal) {
       const initialGoal = location.state.initialGoal;
+      const initialResponse = location.state.initialResponse;
+      
       // Add initial user message
       const userMessage = {
         text: initialGoal,
@@ -23,7 +27,7 @@ function ChatAnalysisPage() {
       
       // Add initial bot response
       const botMessage = {
-        text: "I understand you want to achieve this financial goal. Let me analyze it and provide some recommendations. Could you please share your current monthly income and major expenses?",
+        text: initialResponse || "I understand you want to achieve this financial goal. Let me analyze it and provide some recommendations. Could you please share your current monthly income and major expenses?",
         sender: 'bot',
         timestamp: new Date().toLocaleTimeString()
       };
@@ -62,7 +66,7 @@ function ChatAnalysisPage() {
     adjustTextareaHeight();
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (newMessage.trim()) {
       const userMessage = {
@@ -71,15 +75,29 @@ function ChatAnalysisPage() {
         timestamp: new Date().toLocaleTimeString()
       };
       
-      const botMessage = {
-        text: "Thank you for providing that information. I'm analyzing your budget and goals to provide personalized recommendations. Could you please specify your preferred timeline for achieving this goal?",
-        sender: 'bot',
-        timestamp: new Date().toLocaleTimeString()
-      };
-
-      setMessages([...messages, userMessage, botMessage]);
+      setMessages(prev => [...prev, userMessage]);
       setNewMessage('');
-      setShowGraph(true); // Show graph when new message is sent
+      
+      try {
+        const response = await onSent(newMessage);
+        const botMessage = {
+          text: response,
+          sender: 'bot',
+          timestamp: new Date().toLocaleTimeString()
+        };
+        
+        setMessages(prev => [...prev, botMessage]);
+      } catch (error) {
+        console.error("Error getting response from Gemini:", error);
+        const errorMessage = {
+          text: "I apologize, but I'm having trouble processing your request at the moment. Please try again.",
+          sender: 'bot',
+          timestamp: new Date().toLocaleTimeString()
+        };
+        setMessages(prev => [...prev, errorMessage]);
+      }
+      
+      setShowGraph(true);
       
       if (textareaRef.current) {
         textareaRef.current.style.height = '45px';
