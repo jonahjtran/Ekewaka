@@ -76,12 +76,9 @@ function LandingPage() {
       payment_date: item.payment_date,
       payment_amount: item.payment_amount
     }));
-    localStorage.setItem('categories', JSON.stringify(categoriesObject));
-    localStorage.setItem('categories', JSON.stringify(categoriesObject));
-    localStorage.setItem('categories', JSON.stringify(categoriesObject));
-    console.log(extractedPurchases);
-    console.log(extractedDeposits);
-    console.log(extractedBills);
+    localStorage.setItem('purchases', JSON.stringify(extractedPurchases));
+    localStorage.setItem('deposits', JSON.stringify(extractedDeposits));
+    localStorage.setItem('bills', JSON.stringify(extractedBills));
     navigate('/chat-analysis', { state: { initialGoal: financialGoal , extractedPurchases: extractedPurchases, extractedDeposits: extractedDeposits, extractedBills: extractedBills} });
   };
 
