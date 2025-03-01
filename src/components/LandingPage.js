@@ -1,21 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { context } from './context/context';
 import './LandingPage.css';
 
 function LandingPage() {
   const [financialGoal, setFinancialGoal] = useState('');
   const [showHowItWorks, setShowHowItWorks] = useState(false);
   const navigate = useNavigate();
+  const { onSent } = useContext(context);
 
   const handleGoalChange = (e) => {
     setFinancialGoal(e.target.value);
     adjustHeight(e.target);
   };
 
-  const handleGoalSubmit = (e) => {
+  const handleGoalSubmit = async (e) => {
     e.preventDefault();
     console.log("Financial goal submitted:", financialGoal);
-    navigate('/chat-analysis', { state: { initialGoal: financialGoal } });
+    
+    try {
+      const response = await onSent(financialGoal);
+      console.log("Gemini response:", response);
+      
+      navigate('/chat-analysis', { 
+        state: { 
+          initialGoal: financialGoal,
+          initialResponse: response 
+        } 
+      });
+    } catch (error) {
+      console.error("Error getting response from Gemini:", error);
+      // Still navigate but without the AI response
+      navigate('/chat-analysis', { 
+        state: { 
+          initialGoal: financialGoal
+        } 
+      });
+    }
   };
 
   const adjustHeight = (element) => {
