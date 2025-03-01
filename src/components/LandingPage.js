@@ -6,15 +6,23 @@ import './LandingPage.css';
 function LandingPage() {
   const [financialGoal, setFinancialGoal] = useState('');
   const [showHowItWorks, setShowHowItWorks] = useState(false);
+  const [inputError, setInputError] = useState(false);
   const navigate = useNavigate();
   const { onSent } = useContext(context);
 
   const handleGoalChange = (e) => {
     setFinancialGoal(e.target.value);
+    setInputError(false);
     adjustHeight(e.target);
   };
 
   const handleGoalSubmit = async (e) => {
+    e.preventDefault();
+    if (!financialGoal.trim()) {
+      setInputError(true);
+      return;
+    }
+    
     const merchant_id_mapping = {
       "67c2b24d9683f20dd518c08d":"Amazon",
       "67c2b2619683f20dd518c08e":"Walmart",
@@ -42,7 +50,6 @@ function LandingPage() {
       "67c2b3a09683f20dd518c0a8":"Shell",
       "67c2b3a99683f20dd518c0a9":"BP"
     }
-    e.preventDefault();
     console.log("Financial goal submitted:", financialGoal);
     const apiKey = process.env.REACT_APP_NESSIE_API_KEY;
     const user_id = "67c28f299683f20dd518c026";
@@ -96,10 +103,10 @@ function LandingPage() {
             <div className="input-wrapper">
               <textarea 
                 type="text" 
-                placeholder="Enter your financial goal and time frame" 
+                placeholder="Enter your financial goal" 
                 value={financialGoal} 
                 onChange={handleGoalChange} 
-                className="goal-input"
+                className={`goal-input ${inputError ? 'error' : ''}`}
                 rows="1"
               />
               <button 
@@ -111,6 +118,7 @@ function LandingPage() {
                 ?
               </button>
             </div>
+            {inputError && <p className="error-message">Let's start by sharing your financial goal</p>}
             <button type="submit" className="cta-button">Submit Goal</button>
           </form>
         </div>

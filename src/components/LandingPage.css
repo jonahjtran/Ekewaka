@@ -86,12 +86,71 @@
   resize: none;
   overflow: hidden;
   padding-right: 40px;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .goal-input:focus {
   outline: none;
   border-color: #ff6b6b;
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+}
+
+.goal-input.error {
+  border-color: #dc3545;
+  background-color: #fff8f8;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+  animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translateX(-1px);
+  }
+  20%, 80% {
+    transform: translateX(2px);
+  }
+  30%, 50%, 70% {
+    transform: translateX(-2px);
+  }
+  40%, 60% {
+    transform: translateX(2px);
+  }
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 0.95rem;
+  margin-top: 8px;
+  font-family: 'Arial';
+  text-align: left;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: slideDown 0.3s ease forwards;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+.error-message::before {
+  content: "✨";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  color: #dc3545;
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+@keyframes slideDown {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .help-button {
