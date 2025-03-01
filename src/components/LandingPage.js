@@ -6,12 +6,18 @@ function LandingPage() {
 
   const handleGoalChange = (e) => {
     setFinancialGoal(e.target.value);
+    adjustHeight(e.target);
   };
 
   const handleGoalSubmit = (e) => {
     e.preventDefault();
     console.log("Financial goal submitted:", financialGoal);
     // Additional processing such as API calls can be added here
+  };
+
+  const adjustHeight = (element) => {
+    element.style.height = 'auto'; // Reset height
+    element.style.height = `${element.scrollHeight}px`; // Set height to scroll height
   };
 
   return (
@@ -38,12 +44,13 @@ function LandingPage() {
           </p>
           {/* Financial Goal Input */}
           <form onSubmit={handleGoalSubmit} className="goal-form">
-            <input 
+            <textarea 
               type="text" 
               placeholder="Enter your financial goal" 
               value={financialGoal} 
               onChange={handleGoalChange} 
               className="goal-input"
+              rows="1" // Start with one row
             />
             <button type="submit" className="cta-button">Submit Goal</button>
           </form>

@@ -91,6 +91,8 @@
   font-size: 1rem;
   font-family: Arial;
   border: 2px solid #a89e9e;
+  resize: none; /* Prevent manual resizing */
+  overflow: hidden; /* Hide overflow */
 }
   
   .cta-button {
