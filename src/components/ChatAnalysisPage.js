@@ -30,13 +30,31 @@ function ChatAnalysisPage() {
         
         const dataString = `Here is your financial data:\n\nPurchases: ${purchasesString}`;
         const categories = await onSent("This is related to financial purposes.  Please analyze this data and decide on a series of spending categories.  Then, organize each company into a category.  Please output this information as a map of the format {category: [company1, company2, ...], category2: [company1, company2, ...]}."  + dataString );
-        const start = categories.indexOf('{');
-        const end = categories.indexOf('}',start)+1;
-        const cleanedString = categories.substring(start,end);
-        const categoriesObject = JSON.parse(cleanedString);
-        console.log("ASDFSDFSDF",categoriesObject);
+        
+        try {
+            // Find the first { and last }
+            const start = categories.indexOf('{');
+            const end = categories.lastIndexOf('}') + 1;
             
-        localStorage.setItem('categories', JSON.stringify(categoriesObject));
+            if (start === -1 || end === 0) {
+                console.error("No valid JSON object found in response");
+                throw new Error("Invalid response format");
+            }
+            
+            let cleanedString = categories.substring(start, end);
+            // Replace any single quotes with double quotes
+            cleanedString = cleanedString.replace(/'/g, '"');
+            // Ensure property names are double-quoted
+            cleanedString = cleanedString.replace(/([{,]\s*)([a-zA-Z0-9_]+)(\s*:)/g, '$1"$2"$3');
+            
+            const categoriesObject = JSON.parse(cleanedString);
+            console.log("Parsed categories:", categoriesObject);
+            localStorage.setItem('categories', JSON.stringify(categoriesObject));
+        } catch (error) {
+            console.error("Error parsing categories:", error);
+            // Continue with the chat even if categories parsing fails
+        }
+        
         // Add initial user message
         const userMessage = {
           text: initialGoal,
