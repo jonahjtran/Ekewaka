@@ -71,10 +71,26 @@
     font-size: 1.2rem;
     margin-bottom: 30px;
   }
+
+/* Goal form styles */
+.goal-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.goal-input {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  width: 300px;
+  font-size: 1rem;
+}
   
   .cta-button {
     background: #007bff;
-    color: #fff;
+    color: #000000;
     padding: 10px 30px;
     text-decoration: none;
     border-radius: 5px;
