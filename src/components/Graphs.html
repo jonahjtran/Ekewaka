@@ -43,10 +43,23 @@
             const purch = "merchant_id"; // Purchases use merchant_id
             const bill = "payee"; // Bills use payee
 
+            let checkInterval = setInterval(() => {
+                if (localStorage.getItem('purchases') && 
+                    localStorage.getItem('bills') &&
+                    localStorage.getItem('deposits') &&
+                    localStorage.getItem('categories')) {
+                    
+                    clearInterval(checkInterval); // Stop checking
+                    createChart(); // Now render the chart
+                }
+            }, 50);
+            
             const arrPurchases = JSON.parse(localStorage.getItem('purchases'));
-            const arrBills = JSON.parse(localStorage.getItem('deposits'));
-            const arrDeposits = JSON.parse(localStorage.getItem('bills'));
+            const arrBills = JSON.parse(localStorage.getItem('bills'));
+            const arrDeposits = JSON.parse(localStorage.getItem('deposits'));
             const categories = JSON.parse(localStorage.getItem('categories'));
+
+        
 
             // const arrPurchases = {
             //     0 : {merchant_id: "Taco Bell", purchase_date: '2025-03-01', amount: 4.5},
@@ -116,48 +129,55 @@
         }
 
 
-
-
-
-
-        const mapResult = handleData();
-        const ctx = document.getElementById("myChart").getContext("2d");
-        const myChart = new Chart(ctx, {
-            type: "pie",
-            data: {
-                labels: Array.from(mapResult.keys()),
-                datasets: [{
-                    label: '# of Votes',
-                    data: sumOfList(Array.from(mapResult.values())),
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                // scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                // }
+        function createChart() {
+            const mapResult = handleData();
+            if (!mapResult || mapResult.size === 0) {
+                console.warn("No data available for the chart.");
+                return;
             }
-        });
+
+            const ctx = document.getElementById("myChart").getContext("2d");
+            // console.log(mapResult);
+            const myChart = new Chart(ctx, {
+                type: "pie",
+                data: {
+                    labels: Array.from(mapResult.keys()),
+                    datasets: [{
+                        label: '# of Votes',
+                        data: sumOfList(Array.from(mapResult.values())),
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    // scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    // }
+                }
+            });
+            // return document.getElementById("myChart").toDataURL("image/png");
+            return myChart;
+        }
+
     </script>
 </body>
 </html>

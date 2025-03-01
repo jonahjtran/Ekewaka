@@ -20,7 +20,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 24px 32px;
   border-bottom: 1px solid #eee;
   background: #f8f9fa;
   position: sticky;
@@ -30,7 +30,9 @@
 
 .settings-header h2 {
   margin: 0;
-  color: #2c3e50;
+  color: #2d3748;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
 .close-button {
@@ -39,165 +41,226 @@
   font-size: 24px;
   cursor: pointer;
   color: #666;
-  padding: 0 8px;
+  padding: 4px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
 }
 
 .close-button:hover {
+  background: #edf2f7;
   color: #333;
 }
 
 .settings-form {
-  padding: 20px;
+  padding: 24px;
 }
 
 .settings-section {
-  margin-bottom: 25px;
+  margin-bottom: 32px;
   background: #fff;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.settings-section:last-child {
+  margin-bottom: 16px;
 }
 
 .settings-section h3 {
-  color: #34495e;
-  margin-bottom: 15px;
+  color: #2d3748;
+  margin: 0 0 20px 0;
   font-size: 1.1rem;
-  border-bottom: 2px solid #f0f2f5;
-  padding-bottom: 8px;
+  font-weight: 600;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #edf2f7;
 }
 
-.settings-input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  margin-bottom: 12px;
-  overflow: hidden;
-  -webkit-appearance: none;
-  -moz-appearance: textfield;
+/* Bank Section */
+.bank-section {
+  background: #f7fafc;
 }
 
-/* Prevent scrolling in number inputs */
-.settings-input[type="number"] {
-  -webkit-appearance: none;
-  -moz-appearance: textfield;
+.bank-section .bank-connection-status {
+  padding: 4px 0;
 }
 
-.settings-input[type="number"]:hover,
-.settings-input[type="number"]:focus {
-  -webkit-appearance: none;
-  -moz-appearance: textfield;
-}
-
-.settings-input::-webkit-inner-spin-button,
-.settings-input::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.settings-input::-webkit-scrollbar {
-  display: none;
-}
-
-.settings-input:focus {
-  outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
-}
-
-/* Time Frame Input Styles */
-.time-frame-input {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.time-value {
-  flex: 2;
+/* Income Section */
+.income-section .input-with-prefix:last-child {
   margin-bottom: 0;
 }
 
-.time-unit {
-  flex: 1;
-  margin-bottom: 0;
+/* Expenses Section */
+.expenses-section {
+  background: #fff;
 }
 
-/* Expenses Grid */
 .expenses-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-  margin-bottom: 20px;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
 .expense-item {
   display: flex;
   flex-direction: column;
+  gap: 4px;
 }
 
 .expense-item label {
-  font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 5px;
+  font-size: 0.85rem;
+  color: #4a5568;
+  font-weight: 500;
 }
 
+.expense-item .input-with-prefix {
+  margin-bottom: 0;
+}
+
+.expense-item .settings-input {
+  padding: 8px 16px;
+  padding-left: 32px;
+  font-size: 0.9rem;
+}
+
+.expense-item .prefix {
+  font-size: 0.9rem;
+}
+
+/* Goals Section */
+.goals-section {
+  background: #fff;
+}
+
+.goals-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.goal-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.goal-item label {
+  font-size: 0.9rem;
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.time-frame-input {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+}
+
+.time-value,
+.time-unit {
+  margin-bottom: 0;
+}
+
+/* Input Styles */
+.settings-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  margin-bottom: 16px;
+  background: #fff;
+  color: #2d3748;
+}
+
+.settings-input:last-child {
+  margin-bottom: 0;
+}
+
+.settings-input:focus {
+  outline: none;
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+}
+
+.settings-input::placeholder {
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+/* Input with Prefix */
 .input-with-prefix {
   display: flex;
   align-items: center;
   width: 100%;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.input-with-prefix:last-child {
+  margin-bottom: 0;
 }
 
 .prefix {
-  padding: 10px;
-  background: #f8f9fa;
-  border: 1px solid #ddd;
-  border-right: none;
-  border-radius: 4px 0 0 4px;
-  color: #495057;
-  font-size: 0.9rem;
+  position: absolute;
+  left: 16px;
+  color: #4a5568;
+  font-weight: 500;
+  font-size: 0.95rem;
 }
 
 .input-with-prefix .settings-input {
-  border-left: none;
-  border-radius: 0 4px 4px 0;
-  flex: 1;
+  padding-left: 32px;
   margin-bottom: 0;
 }
 
 /* Total Expenses */
 .total-expenses {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px;
-  background: #f8f9fa;
-  border-radius: 4px;
-  margin-top: 20px;
-  border: 1px solid #ddd;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 16px;
+  margin-top: 16px;
+  border-top: 1px solid #edf2f7;
+}
+
+.total-expenses span {
+  font-size: 0.85rem;
+  color: #4a5568;
+  font-weight: 600;
 }
 
 .total-expenses .amount {
-  font-weight: bold;
-  color: #28a745;
+  padding: 8px 16px;
+  font-size: 1rem;
+  padding-left: 32px;
+}
+
+.total-expenses .amount:before {
+  font-size: 0.9rem;
 }
 
 /* Bank Connection Status */
 .bank-connection-status {
   display: flex;
   align-items: center;
-  gap: 15px;
-  margin-bottom: 15px;
+  gap: 16px;
+  margin-bottom: 0;
 }
 
 .toggle-switch {
   position: relative;
   display: inline-block;
-  width: 50px;
-  height: 24px;
+  width: 52px;
+  height: 28px;
+  flex-shrink: 0;
 }
 
 .toggle-switch input {
@@ -213,72 +276,67 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
-  transition: .4s;
-  border-radius: 24px;
+  background-color: #cbd5e0;
+  transition: .3s;
+  border-radius: 28px;
 }
 
 .toggle-slider:before {
   position: absolute;
   content: "";
-  height: 16px;
-  width: 16px;
+  height: 20px;
+  width: 20px;
   left: 4px;
   bottom: 4px;
   background-color: white;
-  transition: .4s;
+  transition: .3s;
   border-radius: 50%;
 }
 
 input:checked + .toggle-slider {
-  background-color: #28a745;
+  background-color: #48bb78;
 }
 
 input:disabled + .toggle-slider {
-  background-color: #e9ecef;
+  background-color: #e2e8f0;
   cursor: not-allowed;
 }
 
 input:checked + .toggle-slider:before {
-  transform: translateX(26px);
+  transform: translateX(24px);
 }
 
 .connection-text {
-  color: #666;
-  font-size: 0.9rem;
+  color: #4a5568;
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
-.connect-bank-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  width: 100%;
-  transition: background-color 0.3s ease;
-}
-
-.connect-bank-button:hover {
-  background-color: #0056b3;
-}
-
+/* Save Button */
 .save-settings-button {
-  background-color: #28a745;
+  background-color: #4299e1;
   color: white;
   border: none;
-  padding: 12px;
-  border-radius: 4px;
+  padding: 16px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 1rem;
+  font-weight: 600;
   width: 100%;
-  margin-top: 20px;
-  transition: background-color 0.3s ease;
+  transition: all 0.2s ease;
+  margin-top: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .save-settings-button:hover {
-  background-color: #218838;
+  background-color: #3182ce;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.save-settings-button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 /* Responsive adjustments */
@@ -293,12 +351,25 @@ input:checked + .toggle-slider:before {
     width: 100%;
   }
 
-  .expenses-grid {
-    grid-template-columns: 1fr;
+  .settings-header {
+    padding: 20px;
+  }
+
+  .settings-form {
+    padding: 20px;
+  }
+
+  .settings-section {
+    padding: 20px;
+  }
+
+  .expenses-grid,
+  .goals-grid {
+    gap: 16px;
   }
 
   .time-frame-input {
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 
   .time-value,
