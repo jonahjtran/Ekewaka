@@ -50,45 +50,6 @@ function LandingPage() {
         </div>
       </section>
 
-      <section className="features" id="features">
-        <div className="container">
-          <h3>Our Features</h3>
-          <div className="feature-list">
-            <div className="feature">
-              <h4>Custom Plans</h4>
-              <p>Create personalized financial plans tailored to your unique needs.</p>
-            </div>
-            <div className="feature">
-              <h4>Progress Tracking</h4>
-              <p>Monitor your journey with intuitive dashboards and real-time updates.</p>
-            </div>
-            <div className="feature">
-              <h4>Expert Guidance</h4>
-              <p>Access financial advice and insights from industry experts.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="how-it-works" id="how-it-works">
-        <div className="container">
-          <h3>How It Works</h3>
-          <ol>
-            <li><strong>Sign Up:</strong> Create your free account.</li>
-            <li><strong>Set Goals:</strong> Define your long-term financial objectives.</li>
-            <li><strong>Plan & Track:</strong> Receive custom plans and track your progress.</li>
-          </ol>
-        </div>
-      </section>
-
-      <footer className="footer" id="contact">
-        <div className="container">
-          <p>&copy; {new Date().getFullYear()} Ekewaka. All rights reserved.</p>
-          <p>
-            Contact us at <a href="mailto:support@ekewaka.com">support@ekewaka.com</a>
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }
