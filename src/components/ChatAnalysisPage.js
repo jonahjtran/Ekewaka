@@ -59,22 +59,8 @@ function ChatAnalysisPage() {
         const cleanedString = categories.substring(start,end);
         const categoriesObject = JSON.parse(cleanedString);
         console.log("ASDFSDFSDF",categoriesObject);
-        
+            
         localStorage.setItem('categories', JSON.stringify(categoriesObject));
-
-
-      //   //////
-      //   window.onload = function() {
-      //     const imgURL = localStorage.getItem("chartImage");
-      //     if (imgURL) {
-      //         document.getElementById("chartImage").src = imgURL;
-      //     } else {
-      //         alert("No chart image found. Please generate the chart first.");
-      //         window.location.href = "chart.html"; // Redirect back if no image
-      //     }
-      // };
-      // ///////
-
         // Add initial user message
         const userMessage = {
           text: initialGoal,
