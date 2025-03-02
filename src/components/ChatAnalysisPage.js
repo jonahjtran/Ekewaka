@@ -204,19 +204,32 @@ function ChatAnalysisPage() {
     let keys = Array.from(map.keys());
     let result = sumOfList(Array.from(sortedMap.values()))
     let changedMap = new Map();
+    let fillColors = [];
+    let colorStart = 35070;
     for (let i = 0 ; i < keys.length; i++){
       if(result[i] == 0){
         continue;
       }
+      let newColor = (colorStart.toString(16));
+      if(newColor.length < 6){
+        let temp = "0";
+        newColor = (temp.repeat(6 - newColor.length)) + newColor;
+      }
+      fillColors.push(("#" + newColor));
       changedMap.set(keys[i], result[i]);
+      colorStart += 10000;
     }
-    return Array.from(changedMap, ([name, value]) => ({ name, value }));
+    return [Array.from(changedMap, ([name, value]) => ({ name, value })), fillColors];
 
   };
   const totalResult = handleData();
-  const overallMap = totalResult[0]; // Call function to get Map
+  const overallMap = totalResult[0];
   const totalDeposits = totalResult[1];
-  const pieChartData = convertMapToArray(overallMap); // Convert Map to Array
+  const arrayResults = convertMapToArray(overallMap);
+  const pieChartData = arrayResults[0];
+  const pieColors = arrayResults[1];
+  console.log("Pie Colors");
+  console.log(pieColors);
 
   // Dummy data for the graphs - replace with real data later
   const dummyBudgetData = {
@@ -255,7 +268,8 @@ function ChatAnalysisPage() {
 
         <div className="graph-section">
           <div className="graph-container">
-            <h3>Budget Comparison</h3>
+            {/* <h3>Budget Comparison</h3> */}
+            <h3>Breakdown of Current Spending (As a Percentage)</h3>
             <div className="graph-placeholder">
             <ResponsiveContainer width="100%" height={600}>
               <PieChart>
@@ -272,6 +286,7 @@ function ChatAnalysisPage() {
                   {/* Colors for different categories */}
                   {pieChartData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#FF4567"][index % 5]} />
+                  // <Cell key={`cell-${index}`} fill={pieColors[index % pieColors.length]} />
                   ))}
                 </Pie>
                 <Tooltip />
@@ -280,12 +295,12 @@ function ChatAnalysisPage() {
             </ResponsiveContainer>
               <div className="budget-legend">
                 <div className="legend-item">
-                  <span className="old-budget-color"></span>
+                  {/* <span className="old-budget-color"></span>
                   <p>Current Budget</p>
                 </div>
                 <div className="legend-item">
-                  <span className="new-budget-color"></span>
-                  <p>Proposed Budget</p>
+                  <span className="new-budget-color"></span> */}
+                  {/* <p>Proposed Budget</p> */}
                 </div>
               </div>
             </div>
