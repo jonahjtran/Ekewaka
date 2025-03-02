@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { context } from './context/context';
 import './ChatAnalysisPage.css';
-import { flushSync } from 'react-dom';
 import { handleData } from './GraphsJS.js';
 import { sumOfList } from './GraphsJS.js';
 
@@ -15,7 +14,7 @@ import {
 
 <iframe src="/Graphs.html" width="600" height="400" style="border: none;"></iframe>
 
-function ChatAnalysisPage() {
+function ChatAnalysisPage({ userBankConnected }) {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [showGraph, setShowGraph] = useState(false);
@@ -68,11 +67,17 @@ function ChatAnalysisPage() {
           timestamp: new Date().toLocaleTimeString()
         };
         
-        
+
+        // const userSettings = JSON.parse(localStorage.getItem('User Settings'));
+
+
         setMessages([userMessage]);
         
         try {
-          const initialResponse = await onSent("Here is the goal that I am trying to achieve: " + initialGoal + ".  Here is the data that I have collected on purchases, deposits (income), and bills: " + purchasesString + ", " + depositsString + ", " + billsString +  ".  Please tell me how I can change my spending habits to achieve this goal.");
+          var initialResponse = await onSent("Here is the goal that I am trying to achieve: " + initialGoal + ".  Here is the data that I have collected on purchases, deposits (income), and bills: " + purchasesString + ", " + depositsString + ", " + billsString +  ".  Please tell me how I can change my spending habits to achieve this goal.");
+          if (!userBankConnected) {
+            initialResponse = await onSent("Here is the goal that I am trying to achieve: " + initialGoal + ".  Here is the financial data that I have collected: " + localStorage.getItem('User Settings') + ".  Please tell me how I can change my spending habits to achieve this goal.");
+          }
           // Add initial bot response
           const botMessage = {
             text: initialResponse || "I understand you want to achieve this financial goal. Let me analyze it and provide some recommendations. Could you please share your current monthly income and major expenses?",
@@ -140,6 +145,8 @@ function ChatAnalysisPage() {
       
       try {
         console.log("Sending message:", userMessage.text);
+        // const userSettings = JSON.parse(localStorage.getItem('User Settings'));
+        // console.log("User Settings:", userSettings);
         
         // Show loading state
         const loadingMessage = {
@@ -149,7 +156,6 @@ function ChatAnalysisPage() {
           isLoading: true
         };
         setMessages(prev => [...prev, loadingMessage]);
-        
         const response = await onSent(userMessage.text);
         console.log("Received response:", response);
         
@@ -230,24 +236,6 @@ function ChatAnalysisPage() {
   const pieColors = arrayResults[1];
   console.log("Pie Colors");
   console.log(pieColors);
-
-  // Dummy data for the graphs - replace with real data later
-  const dummyBudgetData = {
-    oldBudget: {
-      housing: 1500,
-      food: 500,
-      transportation: 300,
-      utilities: 200,
-      entertainment: 200
-    },
-    newBudget: {
-      housing: 1400,
-      food: 400,
-      transportation: 250,
-      utilities: 180,
-      entertainment: 150
-    }
-  };
 
   return (
     <div className="chat-analysis-page">

@@ -65,6 +65,7 @@ const SettingsSidebar = ({ isOpen, onClose, userBankConnected = false, isLoggedI
     }
 
     console.log(formData);
+    localStorage.setItem('User Settings', JSON.stringify(formData));
     // Handle saving settings to backend with only provided data
   };
 
@@ -226,7 +227,7 @@ const SettingsSidebar = ({ isOpen, onClose, userBankConnected = false, isLoggedI
           </div>
         </div>
 
-        <button type="submit" className="save-settings-button">
+        <button type="submit" className="save-settings-button" onClick={handleSubmit}>
           Save Settings
         </button>
       </form>
