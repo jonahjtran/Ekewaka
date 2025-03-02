@@ -13,7 +13,7 @@ Ekewaka is an intelligent financial planning web application that helps users ac
 
 ## Prerequisites
 
-Before running the application, make sure you have:
+This program utilizes the following technologies:
 
 - Node.js (v14 or higher)
 - npm (v6 or higher)
