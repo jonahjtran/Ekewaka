@@ -3,6 +3,17 @@ import { useLocation } from 'react-router-dom';
 import { context } from './context/context';
 import './ChatAnalysisPage.css';
 import { flushSync } from 'react-dom';
+import { handleData } from './GraphsJS.js';
+import { sumOfList } from './GraphsJS.js';
+
+
+
+
+import { 
+  PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend 
+} from 'recharts';
+
+<iframe src="/Graphs.html" width="600" height="400" style="border: none;"></iframe>
 
 function ChatAnalysisPage() {
   const [messages, setMessages] = useState([]);
@@ -12,6 +23,19 @@ function ChatAnalysisPage() {
   const textareaRef = useRef(null);
   const messagesEndRef = useRef(null);
   const { onSent } = useContext(context);
+  const [chartImage, setChartImage] = useState(null); ///////////////////////////////
+
+  ///////////////////////////////////////
+  useEffect(() => {
+    // ✅ Retrieve and set the chart image from localStorage
+    const imgURL = localStorage.getItem("chartImage");
+    if (imgURL) {
+      setChartImage(imgURL);
+    }
+  }, []);
+  //////////////////////////////////////////
+
+
 
   useEffect(() => {
     // Handle initial goal from landing page
@@ -35,14 +59,29 @@ function ChatAnalysisPage() {
         const cleanedString = categories.substring(start,end);
         const categoriesObject = JSON.parse(cleanedString);
         console.log("ASDFSDFSDF",categoriesObject);
-            
+        
         localStorage.setItem('categories', JSON.stringify(categoriesObject));
+
+
+      //   //////
+      //   window.onload = function() {
+      //     const imgURL = localStorage.getItem("chartImage");
+      //     if (imgURL) {
+      //         document.getElementById("chartImage").src = imgURL;
+      //     } else {
+      //         alert("No chart image found. Please generate the chart first.");
+      //         window.location.href = "chart.html"; // Redirect back if no image
+      //     }
+      // };
+      // ///////
+
         // Add initial user message
         const userMessage = {
           text: initialGoal,
           sender: 'user',
           timestamp: new Date().toLocaleTimeString()
         };
+        
         
         setMessages([userMessage]);
         
@@ -164,6 +203,18 @@ function ChatAnalysisPage() {
     }
   };
 
+  const convertMapToArray = (map) => {
+    let keys = Array.from(map.keys());
+    let result = sumOfList(Array.from(map.values()))
+    let changedMap = new Map();
+    for (let i = 0 ; i < keys.length; i++){
+      changedMap.set(keys[i], result[i]);
+    }
+    return Array.from(changedMap, ([name, value]) => ({ name, value }));
+  };
+  const overallMap = handleData(); // Call function to get Map
+  const pieChartData = convertMapToArray(overallMap); // Convert Map to Array
+
   // Dummy data for the graphs - replace with real data later
   const dummyBudgetData = {
     oldBudget: {
@@ -203,7 +254,27 @@ function ChatAnalysisPage() {
           <div className="graph-container">
             <h3>Budget Comparison</h3>
             <div className="graph-placeholder">
-              <p>Budget visualization will go here</p>
+            <ResponsiveContainer width="100%" height={400}>
+              <PieChart>
+                <Pie 
+                  data={pieChartData} 
+                  dataKey="value" 
+                  nameKey="name" 
+                  cx="50%" 
+                  cy="50%" 
+                  outerRadius={100} 
+                  fill="#8884d8"
+                  label
+                >
+                  {/* Colors for different categories */}
+                  {pieChartData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#FF4567"][index % 5]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
               <div className="budget-legend">
                 <div className="legend-item">
                   <span className="old-budget-color"></span>
