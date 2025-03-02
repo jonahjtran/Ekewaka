@@ -26,7 +26,6 @@ function ChatAnalysisPage({ userBankConnected }) {
 
   ///////////////////////////////////////
   useEffect(() => {
-    // ✅ Retrieve and set the chart image from localStorage
     const imgURL = localStorage.getItem("chartImage");
     if (imgURL) {
       setChartImage(imgURL);
