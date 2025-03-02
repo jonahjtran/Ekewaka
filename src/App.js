@@ -66,7 +66,7 @@ function App() {
           <Layout>
             <Routes>
               <Route path="/" element={<LandingPage />} />
-              <Route path="/chat-analysis" element={<ChatAnalysisPage />} />
+              <Route path="/chat-analysis" element={<ChatAnalysisPage userBankConnected={userBankConnected} /> } />
               <Route path="/about" element={<AboutPage />} />
               <Route 
                 path="/login" 
