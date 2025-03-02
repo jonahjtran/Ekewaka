@@ -33,7 +33,7 @@ REACT_APP_NESSIE_API_KEY=your_nessie_api_key
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/ekewaka.git
+git clone https://github.com/AlexanderLauinger/ekewaka.git
 cd ekewaka
 ```
 
