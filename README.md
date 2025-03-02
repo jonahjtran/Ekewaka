@@ -1,70 +1,117 @@
-# Getting Started with Create React App
+# Ekewaka - AI-Powered Financial Planning Assistant
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Ekewaka is an intelligent financial planning web application that helps users achieve their financial goals through personalized analysis and recommendations. The application combines the power of AI with financial data visualization to provide actionable insights and guidance.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **AI-Powered Financial Analysis**: Utilizes Google's Gemini AI to provide personalized financial advice and recommendations
+- **Interactive Goal Setting**: Users can input their financial goals in natural language
+- **Transaction Analysis**: Analyzes spending patterns across different merchants and categories
+- **Visual Data Representation**: Displays spending breakdowns through interactive pie charts and graphs
+- **Real-time Chat Interface**: Engage in natural conversations about your financial goals and receive instant feedback
+- **Responsive Design**: Fully responsive web interface that works across all devices
 
-### `npm start`
+## Prerequisites
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Before running the application, make sure you have:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Node.js (v14 or higher)
+- npm (v6 or higher)
+- A Google Gemini API key
+- A Capital One Nessie API key (for transaction data)
 
-### `npm test`
+## Environment Variables
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Create a `.env` file in the root directory with the following variables:
 
-### `npm run build`
+```
+REACT_APP_GEMINI_API_KEY=your_gemini_api_key
+REACT_APP_NESSIE_API_KEY=your_nessie_api_key
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Installation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/ekewaka.git
+cd ekewaka
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Install dependencies:
+```bash
+npm install
+```
 
-### `npm run eject`
+3. Start the development server:
+```bash
+npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+The application will be available at `http://localhost:3000`
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Project Structure
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
+ekewaka/
+├── src/
+│   ├── components/
+│   │   ├── LandingPage.js       # Initial goal setting page
+│   │   ├── ChatAnalysisPage.js  # Main chat interface with graphs
+│   │   ├── context/
+│   │   │   └── context.jsx      # AI context provider
+│   │   └── GraphsJS.js          # Graph visualization logic
+│   ├── config/
+│   │   └── gemini.js            # Gemini AI configuration
+│   └── App.js                   # Main application component
+├── public/
+└── package.json
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Key Features Explained
 
-## Learn More
+### 1. Landing Page
+- Users input their financial goals in natural language
+- "How it Works" modal explains the process
+- Collects initial financial data for analysis
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 2. Chat Analysis Page
+- Interactive chat interface with AI assistant
+- Real-time financial advice and recommendations
+- Visual representation of spending patterns
+- Dynamic pie charts showing budget allocation
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 3. AI Integration
+- Powered by Google's Gemini AI model
+- Contextual understanding of financial goals
+- Natural language processing for user inputs
+- Personalized financial recommendations
 
-### Code Splitting
+## Technologies Used
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- React.js
+- Google Generative AI (Gemini)
+- Capital One Nessie API
+- Recharts (for data visualization)
+- CSS3 for styling
 
-### Analyzing the Bundle Size
+## Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-### Making a Progressive Web App
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-### Advanced Configuration
+## Acknowledgments
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- Google Generative AI team for the Gemini API
+- Capital One for the Nessie API
+- The React.js community for excellent tools and libraries
 
-### Deployment
+## Support
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+For support, please open an issue in the GitHub repository or contact the development team.
