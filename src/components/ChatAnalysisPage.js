@@ -196,15 +196,32 @@ function ChatAnalysisPage({ userBankConnected }) {
   };
 
   const convertMapToArray = (map) => {
+    // let keys = Array.from(map.keys());
+    // let result = sumOfList(Array.from(map.values()))
+    // let changedMap = new Map();
+    // for (let i = 0 ; i < keys.length; i++){
+    //   if(result[i] == 0){
+    //     continue;
+    //   }
+    //   changedMap.set(keys[i], result[i]);
+    // }
+    // return Array.from(changedMap, ([name, value]) => ({ name, value }));
+    const sortedMap = new Map([...map.entries()].sort(([, valueA], [, valueB]) => valueA - valueB));
     let keys = Array.from(map.keys());
-    let result = sumOfList(Array.from(map.values()))
+    let result = sumOfList(Array.from(sortedMap.values()))
     let changedMap = new Map();
     for (let i = 0 ; i < keys.length; i++){
+      if(result[i] == 0){
+        continue;
+      }
       changedMap.set(keys[i], result[i]);
     }
     return Array.from(changedMap, ([name, value]) => ({ name, value }));
+
   };
-  const overallMap = handleData(); // Call function to get Map
+  const totalResult = handleData();
+  const overallMap = totalResult[0]; // Call function to get Map
+  const totalDeposits = totalResult[1];
   const pieChartData = convertMapToArray(overallMap); // Convert Map to Array
 
   return (
@@ -228,7 +245,7 @@ function ChatAnalysisPage({ userBankConnected }) {
           <div className="graph-container">
             <h3>Budget Comparison</h3>
             <div className="graph-placeholder">
-            <ResponsiveContainer width="100%" height={400}>
+            <ResponsiveContainer width="100%" height={600}>
               <PieChart>
                 <Pie 
                   data={pieChartData} 
@@ -236,7 +253,7 @@ function ChatAnalysisPage({ userBankConnected }) {
                   nameKey="name" 
                   cx="50%" 
                   cy="50%" 
-                  outerRadius={100} 
+                  outerRadius={190} 
                   fill="#8884d8"
                   label
                 >

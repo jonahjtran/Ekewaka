@@ -73,7 +73,7 @@ export function handleData() {
     }
 
     // overallMap.set("Deposits", depositTotal);
-    return overallMap;
+    return [overallMap, depositTotal];
 }
 
 export function sumOfList(list){
