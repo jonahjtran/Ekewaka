@@ -112,6 +112,12 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Capital One for the Nessie API
 - The React.js community for excellent tools and libraries
 
+## Team Members
+- Jonah Tran
+- Michael Zayed
+- Alexander Lauinger
+- Connor Koefelda
+
 ## Support
 
 For support, please open an issue in the GitHub repository or contact the development team.
